@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en" class="bg-primary">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Root-cause analysis and a working proof of concept for every vulnerability cli0ck has disclosed.">
+<meta name="theme-color" content="#1c1917">
+<title>Research | cli0ck</title>
+<link href="assets/site.css" rel="stylesheet">
+<link href="assets/writeup.css" rel="stylesheet">
+</head>
+<body>
+
+<header id="header" class="bg-secondary fixed transition-colors w-full z-50">
+  <nav class="border-b border-gray-300 lg:px-6 px-4 py-2.5">
+    <div class="flex flex-wrap items-center justify-between max-w-screen-xl mx-auto">
+      <a href="index.html" class="flex items-center">
+        <span class="font-semibold mr-3 text-2xl text-white">cli<span class="text-accent">0</span>ck</span>
+      </a>
+      <div class="flex items-center lg:order-2">
+        <button type="button" id="menu-btn" class="inline-flex items-center lg:hidden ml-1 p-2 text-white">
+          <span class="sr-only">Open main menu</span>
+          <svg fill="currentColor" class="h-6 w-6" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M3 5h14a1 1 0 100-2H3a1 1 0 000 2zm0 6h14a1 1 0 100-2H3a1 1 0 000 2zm0 6h14a1 1 0 100-2H3a1 1 0 000 2z" clip-rule="evenodd"/></svg>
+        </button>
+      </div>
+      <div class="hidden items-center justify-between lg:flex lg:order-1 lg:w-auto w-full" id="menu">
+        <ul class="flex flex-col font-medium lg:flex-row lg:mt-0 lg:space-x-8 mt-4 text-xl">
+            <li><a href="index.html" class="block pl-3 pr-4 py-2 text-white">Home</a></li>
+            <li><a href="research.html" class="block pl-3 pr-4 py-2 text-white">Research</a></li>
+            <li><a href="index.html#crew" class="block pl-3 pr-4 py-2 text-white">The Crew</a></li>
+            <li><a href="index.html#record" class="block pl-3 pr-4 py-2 text-white">Record</a></li>
+            <li><a href="mailto:info@cli0ck.com" class="block pl-3 pr-4 py-2 text-white">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+<main>
+  <section class="lg:pb-24 lg:pt-40 lg:px-6 pb-16 pt-32 px-3">
+    <div class="max-w-screen-xl mx-auto">
+      <p class="font-mono mb-4 text-accent text-sm">$ cat cves.txt</p>
+      <h1 class="font-semibold leading-tight lg:text-6xl max-w-4xl mb-6 text-4xl text-white">Root cause, proof of concept, and the patch that followed.</h1>
+      <p class="leading-relaxed lg:mb-16 lg:text-xl max-w-2xl mb-12 text-lg text-white/60">Every vulnerability below was reported privately, reproduced, root-caused, and fixed by the vendor before it was published here. Nothing on this page is a claim you have to take on trust.</p>
+
+      <div class="gap-x-6 gap-y-12 grid grid-cols-2 lg:grid-cols-4 md:grid-cols-3">
+        <a href="research/cve-2026-74943-rasterimage-use-after-free.html" class="block group rx-card">
+          <div class="aspect-[2/3] bg-secondary mb-4 overflow-hidden rounded-lg">
+            <img src="assets/posters/firefox.svg" alt="Mozilla Firefox" loading="lazy" class="duration-300 group-hover:scale-[1.03] h-full object-contain p-6 transition-transform w-full">
+          </div>
+          <p class="c-meta mb-2">CVE-2026-74943 &middot; Critical</p>
+          <h2 class="font-semibold group-hover:text-accent leading-snug mb-2 text-lg text-white transition-colors">Use-after-free in RasterImage surface discard</h2>
+          <p class="leading-snug text-sm text-white/60">Firefox stores decoded image surfaces in a SurfaceCache keyed by a raw, non-owning pointer to the owning image, and notifies that…</p>
+        </a>
+        <a href="research/cve-2026-74945-font-heap-disclosure.html" class="block group rx-card">
+          <div class="aspect-[2/3] bg-secondary mb-4 overflow-hidden rounded-lg">
+            <img src="assets/posters/firefox.svg" alt="Mozilla Firefox" loading="lazy" class="duration-300 group-hover:scale-[1.03] h-full object-contain p-6 transition-transform w-full">
+          </div>
+          <p class="c-meta mb-2">CVE-2026-74945 &middot; High</p>
+          <h2 class="font-semibold group-hover:text-accent leading-snug mb-2 text-lg text-white transition-colors">Uninitialized heap disclosure through a crafted web font</h2>
+          <p class="leading-snug text-sm text-white/60">Firefox sanitizes web fonts through OTS before use.</p>
+        </a>
+        <a href="research/cve-2026-39154-cometchat-stored-xss.html" class="block group rx-card">
+          <div class="aspect-[2/3] bg-secondary mb-4 overflow-hidden rounded-lg">
+            <img src="assets/posters/cometchat.svg" alt="CometChat" loading="lazy" class="duration-300 group-hover:scale-[1.03] h-full object-contain p-6 transition-transform w-full">
+          </div>
+          <p class="c-meta mb-2">CVE-2026-39154 &middot; High</p>
+          <h2 class="font-semibold group-hover:text-accent leading-snug mb-2 text-lg text-white transition-colors">Stored XSS in CometChat group messages</h2>
+          <p class="leading-snug text-sm text-white/60">An authenticated user can inject a persistent JavaScript payload into a group chat message through the data.text parameter of the…</p>
+        </a>
+        <a href="research/cve-2026-74970-webrender-fission-bypass.html" class="block group rx-card">
+          <div class="aspect-[2/3] bg-secondary mb-4 overflow-hidden rounded-lg">
+            <img src="assets/posters/firefox.svg" alt="Mozilla Firefox" loading="lazy" class="duration-300 group-hover:scale-[1.03] h-full object-contain p-6 transition-transform w-full">
+          </div>
+          <p class="c-meta mb-2">CVE-2026-74970 &middot; Moderate</p>
+          <h2 class="font-semibold group-hover:text-accent leading-snug mb-2 text-lg text-white transition-colors">Fission site-isolation bypass via missing PipelineId namespace check</h2>
+          <p class="leading-snug text-sm text-white/60">Under Fission each content process owns a PipelineId namespace.</p>
+        </a>
+        <a href="research/cve-2026-6765-formautofill-handlers.html" class="block group rx-card">
+          <div class="aspect-[2/3] bg-secondary mb-4 overflow-hidden rounded-lg">
+            <img src="assets/posters/firefox.svg" alt="Mozilla Firefox" loading="lazy" class="duration-300 group-hover:scale-[1.03] h-full object-contain p-6 transition-transform w-full">
+          </div>
+          <p class="c-meta mb-2">CVE-2026-6765 &middot; Moderate</p>
+          <h2 class="font-semibold group-hover:text-accent leading-snug mb-2 text-lg text-white transition-colors">Test-only FormAutofill handlers exposed in production</h2>
+          <p class="leading-snug text-sm text-white/60">Firefox isolates web content in sandboxed child processes while sensitive data such as saved addresses and credit cards lives in…</p>
+        </a>
+      </div>
+
+      <div class="border-t border-white/15 gap-6 grid grid-cols-2 lg:grid-cols-4 mt-16 pt-12">
+        <div>
+          <p class="font-semibold lg:text-5xl text-3xl text-white">5</p>
+          <p class="mt-2 text-white/40 text-xs tracking-[0.2em] uppercase">CVEs published</p>
+        </div>
+        <div>
+          <p class="font-semibold lg:text-5xl text-3xl text-white">9.8</p>
+          <p class="mt-2 text-white/40 text-xs tracking-[0.2em] uppercase">Highest CVSS</p>
+        </div>
+        <div>
+          <p class="font-semibold lg:text-5xl text-3xl text-white">2</p>
+          <p class="mt-2 text-white/40 text-xs tracking-[0.2em] uppercase">Vendors credited</p>
+        </div>
+        <div>
+          <p class="font-semibold lg:text-5xl text-3xl text-white">100%</p>
+          <p class="mt-2 text-white/40 text-xs tracking-[0.2em] uppercase">Fixed before publication</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-secondary lg:px-10 lg:py-20 px-3 py-16">
+    <div class="max-w-screen-xl mx-auto text-center">
+      <h2 class="font-semibold lg:text-5xl mb-4 text-3xl text-white">Let&rsquo;s talk</h2>
+      <p class="font-light lg:mb-10 lg:text-2xl mb-8 text-lg text-white/80">Tell us what you&rsquo;re building, and what keeps you up at night.</p>
+      <div class="inline-block">
+          <a href="mailto:info@cli0ck.com" class="bg-gradient-to-r border border-accent flex from-accent items-center rounded-full to-accent-dark transition-all">
+            <div class="bg-white/20 flex h-[44px] items-center justify-center rounded-full w-[44px]">
+              <span class="text-white text-xl">&rarr;</span>
+            </div>
+            <div class="font-medium px-9 text-lg text-white">Put us on your target</div>
+          </a>
+        </div>
+    </div>
+  </section>
+</main>
+<footer class="bg-secondary">
+  <div class="border-accent/30 border-y divide-accent/30 divide-y">
+    <div class="divide-accent/30 divide-x flex">
+      <div class="flex flex-1 items-center">
+        <span class="font-semibold m-auto p-6 text-2xl text-white">cli<span class="text-accent">0</span>ck</span>
+      </div>
+      <div class="flex-1 hidden lg:block p-6 text-center">
+        <p class="mb-3 text-white">Connect With Us</p>
+        <div class="flex gap-6 justify-center">
+          <a href="https://www.linkedin.com/in/abdulaziz-alasaiqah-b74071334" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" class="text-white" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.5c0-1.31-.02-3-1.83-3-1.83 0-2.11 1.43-2.11 2.9V21h-4V9Z"/></svg></a>
+          <a href="https://github.com/defineid" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" class="text-white" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.79 23.4c.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49.99.11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.8 5.62-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.21.7.82.58A12 12 0 0 0 12 .5Z"/></svg></a>
+          <a href="mailto:info@cli0ck.com" aria-label="Email"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" class="text-white" aria-hidden="true"><rect x="2.5" y="4.5" width="19" height="15" rx="2"/><path d="m3 6 9 7 9-7"/></svg></a>
+        </div>
+      </div>
+      <div class="flex-1 lg:text-center p-6">
+        <ul class="flex flex-col">
+          <li><a href="index.html" class="text-white">Home</a></li>
+          <li><a href="research.html" class="text-white">Research</a></li>
+          <li><a href="index.html#crew" class="text-white">The Crew</a></li>
+          <li><a href="index.html#record" class="text-white">Record</a></li>
+          <li><a href="mailto:info@cli0ck.com" class="text-white">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="lg:hidden px-16 py-6 text-center">
+      <p class="mb-3 text-white">Connect with us</p>
+      <div class="flex gap-6 justify-center">
+          <a href="https://www.linkedin.com/in/abdulaziz-alasaiqah-b74071334" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" class="text-white" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.5c0-1.31-.02-3-1.83-3-1.83 0-2.11 1.43-2.11 2.9V21h-4V9Z"/></svg></a>
+          <a href="https://github.com/defineid" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" class="text-white" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.79 23.4c.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49.99.11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.8 5.62-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.21.7.82.58A12 12 0 0 0 12 .5Z"/></svg></a>
+          <a href="mailto:info@cli0ck.com" aria-label="Email"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" class="text-white" aria-hidden="true"><rect x="2.5" y="4.5" width="19" height="15" rx="2"/><path d="m3 6 9 7 9-7"/></svg></a>
+        </div>
+    </div>
+  </div>
+  <p class="py-6 text-center text-white text-xs">&copy; 2026 cli0ck. All Rights Reserved. &middot; Riyadh, Kingdom of Saudi Arabia</p>
+</footer>
+<script>
+(function(){
+  var b = document.getElementById('menu-btn'), m = document.getElementById('menu');
+  if (b && m) b.addEventListener('click', function(){ m.classList.toggle('hidden'); });
+})();
+</script>
+</body>
+</html>

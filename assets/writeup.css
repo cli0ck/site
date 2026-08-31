@@ -1,0 +1,327 @@
+/* cli0ck — the only two components calif.io's stylesheet has no analogue for:
+   the source-level lifetime tables and the inline SVG diagrams carried over
+   from the write-ups. Styled with its own tokens (#1c1917 / #292524 /
+   #d97706) so they sit inside its article template without overriding it. */
+.wu-table{background:#171412;border:1px solid rgba(255,255,255,.10)}
+.wu-table table{width:100%;min-width:520px;border-collapse:collapse;font-size:.875rem}
+.wu-table th,.wu-table td{padding:11px 15px;text-align:left;vertical-align:top;border-bottom:1px solid rgba(255,255,255,.10)}
+.wu-table th{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.6875rem;letter-spacing:.12em;text-transform:uppercase;color:#f59e0b;white-space:nowrap}
+.wu-table td{color:rgba(255,255,255,.72)}
+.wu-table td:first-child{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:rgba(255,255,255,.40)}
+.wu-table td:nth-child(2){font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.8125rem;color:rgba(255,255,255,.40);white-space:nowrap}
+.wu-table tr:last-child td{border-bottom:none}
+
+.wu-diagram{position:relative;background:#171412;border:1px solid rgba(255,255,255,.10);padding:22px 18px}
+.wu-diagram svg{width:100%;height:auto;display:block;min-width:580px}
+.wu-diagram::after{content:'\27E9';position:absolute;top:0;bottom:0;right:0;width:34px;display:flex;align-items:center;justify-content:center;font-family:ui-monospace,monospace;font-size:15px;color:#f59e0b;opacity:.7;background:linear-gradient(to right,transparent,#171412 65%);pointer-events:none}
+.wu-diagram text{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12px;fill:#e7e5e4}
+.wu-diagram .d-lane{font-size:12px;font-weight:600;letter-spacing:.06em;fill:#f59e0b}
+.wu-diagram .d-box{fill:#1c1917;stroke:rgba(217,119,6,.22)}
+.wu-diagram .d-txt{fill:#e7e5e4}
+.wu-diagram .d-dim{font-size:11px;fill:#a8a29e}
+.wu-diagram .d-bad{fill:rgba(220,38,38,.14);stroke:rgba(220,38,38,.5)}
+.wu-diagram .d-badtx{fill:#f0836a}
+.wu-diagram .d-ok{fill:rgba(217,119,6,.13);stroke:rgba(217,119,6,.34)}
+.wu-diagram .d-line{stroke:rgba(255,255,255,.24);stroke-width:1.5;fill:none}
+.wu-diagram .d-flow{stroke:#f59e0b;stroke-width:1.6;fill:none}
+.wu-diagram .d-pulse{opacity:.85;animation:dpulse 2.6s ease-in-out infinite}
+@keyframes dpulse{0%,100%{opacity:.45}50%{opacity:1}}
+
+@media (prefers-reduced-motion:reduce){.wu-diagram .d-pulse{animation:none}}
+
+/* ============================================================
+   cli0ck house rules, layered over calif's sheet.
+   Borrowed from huntress.com's discipline, not its look:
+     - mono is reserved for facts a reader can go and check
+     - the third-party proof band is square, unshadowed, and
+       leads with the number
+   site.css is never touched.
+   ============================================================ */
+:root{ --c-mono:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace; }
+
+/* the eyebrow, one treatment everywhere */
+.c-eyebrow{
+  font-family:var(--c-mono);font-size:.6875rem;font-weight:600;
+  letter-spacing:.2em;text-transform:uppercase;color:#f59e0b;line-height:1.6;
+}
+.c-eyebrow--light{color:#b45309}
+
+/* mono metadata: CVE ids, severities, versions — checkable things */
+.c-meta{
+  font-family:var(--c-mono);font-size:.75rem;letter-spacing:.06em;
+  color:rgba(255,255,255,.55);font-variant-numeric:tabular-nums;
+}
+/* an inline checkable fact inside running copy */
+.c-fact{
+  font-family:var(--c-mono);font-size:.9em;font-weight:600;
+  letter-spacing:.02em;color:#b45309;font-variant-numeric:tabular-nums;
+  white-space:nowrap;
+}
+
+/* third-party proof cards: square, no shadow, number first */
+.c-proof{
+  background:#fff;border:1px solid rgba(28,25,23,.14);border-radius:0;
+  box-shadow:none;padding:24px 22px 26px;margin-bottom:12px;
+}
+.c-proof-src{
+  font-family:var(--c-mono);font-size:.6875rem;font-weight:600;letter-spacing:.16em;
+  text-transform:uppercase;color:#b45309;line-height:1.55;margin:0 0 16px;
+}
+.c-proof-num{
+  font-family:var(--c-mono);font-size:2.5rem;line-height:1;letter-spacing:-.035em;
+  color:#1c1917;font-variant-numeric:tabular-nums;margin:0 0 10px;
+}
+.c-proof-body{color:#44403c;font-size:.9375rem;line-height:1.62;margin:0}
+.c-proof .c-fact{color:#b45309}
+
+/* the gradient CTA's border sat on top of its own fill and drew nothing */
+a.bg-gradient-to-r.border-accent{border-color:rgba(255,255,255,.22)}
+
+/* ============================================================
+   MOBILE. Every rule below lives inside a max-width query.
+   Layout changes stop at 767px; the type/tap-target floor runs
+   to 1023px, which is where this site's own header still uses
+   the mobile nav. Nothing at >=1024px is touched.
+   ============================================================ */
+
+/* --- 1. research cards become full-width press rows ------------------- */
+@media (max-width:767px){
+  .grid:has(> .rx-card){row-gap:0;column-gap:0}
+  .rx-card{
+    grid-column:1/-1;
+    display:grid;
+    grid-template-columns:72px minmax(0,1fr);
+    column-gap:16px;
+    align-content:center;
+    min-height:44px;
+    padding:16px 0;
+    border-bottom:1px solid rgba(255,255,255,.13);
+  }
+  .rx-card:first-child{border-top:1px solid rgba(255,255,255,.13)}
+  .rx-card > div{
+    grid-area:1/1/3/2;align-self:center;
+    aspect-ratio:1;width:72px;height:72px;margin-bottom:0;
+  }
+  .rx-card > div img{padding:10px}
+  .rx-card > p:nth-of-type(1){grid-area:1/2/2/3;align-self:end;margin-bottom:4px}
+  .rx-card > h2{
+    grid-area:2/2/3/3;align-self:start;margin-bottom:0;
+    font-size:1.0625rem;line-height:1.3;
+  }
+  .rx-card > p:nth-of-type(2){
+    grid-area:3/1/4/3;margin-top:10px;font-size:.875rem;line-height:1.5;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+  }
+  /* the home teaser and the article footer lead with the headline only;
+     the archive page keeps its deck */
+  #research .rx-card > p:nth-of-type(2),
+  article .rx-card > p:nth-of-type(2){display:none}
+}
+
+/* --- 2. the source-lifetime table stacks instead of side-scrolling ---- */
+@media (max-width:767px){
+  .wu-table{background:transparent;border:0;border-radius:0}
+  .wu-table table{min-width:0;width:100%;display:block}
+  .wu-table thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+  .wu-table tbody{display:block}
+  .wu-table tr{
+    display:block;background:#171412;border:1px solid rgba(255,255,255,.10);
+    border-radius:.5rem;padding:12px 14px;margin-bottom:10px;
+  }
+  .wu-table tr:last-child{margin-bottom:0}
+  .wu-table td{
+    display:block;padding:0;border:0;white-space:normal;
+    font-family:inherit;font-size:.9375rem;line-height:1.55;color:rgba(255,255,255,.78);
+  }
+  .wu-table td + td{margin-top:6px}
+  .wu-table td::before{
+    content:attr(data-label);display:block;
+    font-family:var(--c-mono);font-size:.6875rem;font-weight:600;
+    letter-spacing:.14em;text-transform:uppercase;color:#f59e0b;margin-bottom:2px;
+  }
+  /* column 1 (the step number) rides in the corner as a counter chip */
+  .wu-table td:first-child{
+    float:right;margin:-2px 0 0 12px;padding:2px 9px;
+    font-family:var(--c-mono);font-size:13px;line-height:1.2;color:#f59e0b;
+    background:rgba(217,119,6,.13);border:1px solid rgba(217,119,6,.30);
+    border-radius:999px;
+  }
+  .wu-table td:first-child::before{display:none}
+  .wu-table td:nth-child(2){
+    font-family:var(--c-mono);font-size:13px;line-height:1.5;white-space:normal;
+    color:rgba(255,255,255,.55);overflow-wrap:anywhere;
+  }
+}
+
+/* --- 3. tap targets: nothing interactive under 44px ------------------- */
+@media (max-width:1023px){
+  footer ul li a{display:block;min-height:44px;padding:11px 0;line-height:22px}
+  footer .justify-center a{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:44px;height:44px;margin:-11px 0;
+  }
+  #services p > a,
+  #research > div > p > a,
+  #crew a[href*="linkedin"],
+  article > div > a[href$="research.html"]{
+    display:inline-flex;align-items:center;min-height:44px;
+  }
+}
+
+/* --- 4. type floor: nothing under 13px, and it has to pass AA --------- */
+@media (max-width:1023px){
+  .text-xs{font-size:13px;line-height:1.45}
+  .tracking-\[0\.2em\]{letter-spacing:.13em}
+  .tracking-\[0\.15em\]{letter-spacing:.11em}
+  .text-white\/40{color:rgba(255,255,255,.62)}
+  .text-white\/30{color:rgba(255,255,255,.52)}
+  .c-eyebrow{font-size:13px;letter-spacing:.15em}
+  .c-meta{font-size:13px}
+  .c-proof-src{font-size:13px;letter-spacing:.1em}
+}
+
+/* --- 5. hero: owns the fold, and gains a light source ----------------- */
+@media (max-width:767px){
+  section.bg-home{
+    min-height:620px;min-height:76svh;
+    display:flex;flex-direction:column;justify-content:flex-end;
+  }
+  section.bg-home::before{
+    content:'';position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(125% 70% at 16% 32%,rgba(217,119,6,.17),transparent 62%);
+  }
+  section.bg-home h1{font-size:2.25rem;line-height:1.1;letter-spacing:-.015em}
+}
+
+/* --- 6. the white record wall gets tone so the cards read as cards ---- */
+@media (max-width:767px){
+  #record{background:#f2f0ed}
+  #record .c-proof{
+    border-color:#dfdad2;
+    box-shadow:0 1px 2px rgba(28,25,23,.07),0 10px 26px -16px rgba(28,25,23,.28);
+  }
+  #record .c-proof-num{font-size:2.125rem}
+}
+
+/* --- 7. logo marquee: fewer, larger-reading units, soft edges --------- */
+@media (max-width:767px){
+  .logo-container{
+    --logo-width:118px;--logo-height:34px;--logo-margin:34px;
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
+    mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
+  }
+  .logo-slide{animation-duration:44s}
+}
+
+/* --- 8. touch feedback: site.css kills the tap highlight globally, so
+       every press currently registers as nothing at all ---------------- */
+@media (max-width:1023px){
+  .rx-card{transition:background-color .12s ease}
+  .rx-card:active{background-color:rgba(255,255,255,.055)}
+  footer ul li a:active,
+  #services p > a:active,
+  #research > div > p > a:active,
+  #crew a[href*="linkedin"]:active,
+  article > div > a[href$="research.html"]:active{opacity:.55}
+  a.bg-gradient-to-r:active{transform:scale(.985)}
+  .wu-table tr:active{border-color:rgba(217,119,6,.28)}
+}
+
+/* --- 9. the marquee never stops; honour the OS setting ---------------- */
+@media (prefers-reduced-motion:reduce){
+  .logo-slide{animation:none}
+  .rx-card{transition:none}
+}
+
+/* --- 10. code + diagram scrollers behave on touch --------------------- */
+@media (max-width:767px){
+  .wu-diagram::after{width:28px;font-size:13px}
+  pre.overflow-x-auto{-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+}
+
+/* ============================================================
+   Disclosure map — every point on it is real: five CVEs
+   reported out of Riyadh, patched, and shipped worldwide.
+   No telemetry is implied and no attack data is invented.
+   ============================================================ */
+.c-map-wrap{position:relative;width:100%;overflow:hidden}
+.c-map{display:block;width:100%;height:auto;aspect-ratio:200/69}
+.c-map-cap{
+  position:absolute;left:0;right:0;bottom:0;padding:14px 16px;
+  background:linear-gradient(to top,rgba(28,25,23,.92),rgba(28,25,23,0));
+  display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;
+}
+.c-map-cve{
+  font-family:var(--c-mono);font-size:.75rem;font-weight:600;letter-spacing:.08em;
+  color:#f59e0b;font-variant-numeric:tabular-nums;white-space:nowrap;
+}
+.c-map-what{font-size:.8125rem;color:rgba(255,255,255,.72);line-height:1.45}
+.c-map-legend{
+  display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:18px;
+  font-family:var(--c-mono);font-size:.6875rem;letter-spacing:.14em;
+  text-transform:uppercase;color:rgba(255,255,255,.45);
+}
+.c-map-legend b{display:inline-flex;align-items:center;gap:8px;font-weight:400}
+.c-map-legend i{width:7px;height:7px;border-radius:50%;display:inline-block}
+.c-map-legend i.o{background:#f59e0b;box-shadow:0 0 0 3px rgba(245,158,11,.22)}
+.c-map-legend i.p{background:rgba(231,229,228,.75)}
+@media (max-width:767px){
+  /* on a phone the overlay ate a quarter of the map — sit it underneath instead */
+  .c-map{aspect-ratio:200/78}
+  .c-map-cap{
+    position:static;background:none;padding:14px 0 0;
+    flex-direction:column;gap:5px;
+    border-top:1px solid rgba(255,255,255,.13);margin-top:14px;
+  }
+  .c-map-what{font-size:.8125rem;color:rgba(255,255,255,.62)}
+  .c-map-legend{gap:8px 16px;font-size:.625rem;margin-top:14px}
+}
+
+/* ---- live NVD panel on the disclosure map ---- */
+.c-live-head{display:flex;align-items:center;gap:9px;margin-bottom:9px}
+.c-live-dot{width:7px;height:7px;border-radius:50%;flex:none;background:#78716c}
+.c-live-dot.is-live{background:#f59e0b;animation:c-live 1.9s ease-in-out infinite}
+.c-live-dot.is-cached{background:#78716c}
+@keyframes c-live{0%,100%{box-shadow:0 0 0 0 rgba(245,158,11,.55)}70%{box-shadow:0 0 0 7px rgba(245,158,11,0)}}
+.c-live-src,.c-live-sync{
+  font-family:var(--c-mono);font-size:.625rem;letter-spacing:.16em;text-transform:uppercase;
+}
+.c-live-src{color:rgba(255,255,255,.72)}
+.c-live-sync{color:rgba(255,255,255,.42);margin-left:auto;text-align:right}
+.c-live-row{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin-bottom:6px}
+.c-live-score{
+  font-family:var(--c-mono);font-size:.8125rem;font-weight:600;letter-spacing:.06em;
+  font-variant-numeric:tabular-nums;color:rgba(255,255,255,.75);white-space:nowrap;
+}
+.c-live-score.sev-critical{color:#f0836a}
+.c-live-score.sev-high{color:#f59e0b}
+.c-live-score.sev-medium{color:#d6d3d1}
+.c-live-score.sev-low{color:#a8a29e}
+.c-live-status{
+  font-family:var(--c-mono);font-size:.6875rem;letter-spacing:.08em;
+  color:rgba(255,255,255,.45);white-space:nowrap;
+}
+.c-map-legend b#maptotal,.c-map-legend #maptotal{color:rgba(255,255,255,.75);font-variant-numeric:tabular-nums}
+@media (max-width:767px){
+  .c-live-sync{margin-left:0;flex-basis:100%;text-align:left;margin-top:2px}
+  .c-live-head{flex-wrap:wrap;gap:6px 8px}
+  .c-live-status{white-space:normal}
+}
+
+/* ---- reference pills on writeups (Bugzilla / PoC links) ----
+   The icon must be constrained or the SVG renders at its natural size and
+   the label wraps to three lines inside the pill. */
+a[class*="rounded-full"][target="_blank"]{
+  white-space:nowrap;line-height:1.35;padding-top:7px;padding-bottom:7px;
+  vertical-align:middle;
+}
+a[class*="rounded-full"][target="_blank"] > svg{
+  width:13px;height:13px;flex:none;
+}
+a[class*="rounded-full"][target="_blank"] > span{white-space:nowrap}
+@media (max-width:767px){
+  a[class*="rounded-full"][target="_blank"]{
+    white-space:normal;min-height:44px;padding-inline:14px;
+  }
+  a[class*="rounded-full"][target="_blank"] > span{white-space:normal}
+}

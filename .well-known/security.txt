@@ -1,0 +1,6 @@
+Contact: mailto:security@cli0ck.com
+Contact: https://cli0ck.com/#contact
+Preferred-Languages: en, ar
+Canonical: https://cli0ck.com/.well-known/security.txt
+Policy: https://cli0ck.com/#faq
+Expires: 2027-08-31T00:00:00.000Z

@@ -1,0 +1,103 @@
+[
+ {
+  "slug": "cve-2026-74943-rasterimage-use-after-free",
+  "cve": "CVE-2026-74943",
+  "title": "Use-after-free in RasterImage surface discard",
+  "vendor": "Mozilla Firefox",
+  "tag": "Graphics, ImageLib",
+  "sev": "crit",
+  "sevtx": "critical",
+  "status": "RESOLVED FIXED",
+  "summary": "Firefox stores decoded image surfaces in a SurfaceCache keyed by a raw, non-owning pointer to the owning image, and notifies that image when a surface is discarded. The notification ran on a decoder thread and took a strong reference with RefPtr<RasterImage> image = this after only checking an mIsBeingDestroyed flag. Ordinary web content can drive surface eviction while the image is being released on the main thread, so the check and the AddRef could straddle the moment the reference count reached zero, resurrecting an object whose destructor had already begun and later reading freed memory.",
+  "meta": {
+   "Vendor": "Mozilla Firefox",
+   "Component": "Core / Graphics: ImageLib",
+   "Class": "Use-After-Free",
+   "CWE": "416",
+   "CVSS": "9.8 Critical (NVD); sec-high (Mozilla internal)",
+   "Fixed in": "Firefox 154, ESR 115.39, ESR 140.14, ESR 153.1; Thunderbird 154, 140.14, 153.1",
+   "Interaction": "None, page load only"
+  }
+ },
+ {
+  "slug": "cve-2026-74945-font-heap-disclosure",
+  "cve": "CVE-2026-74945",
+  "title": "Uninitialized heap disclosure through a crafted web font",
+  "vendor": "Mozilla Firefox",
+  "tag": "Graphics, Text",
+  "sev": "high",
+  "sevtx": "sec-high",
+  "status": "RESOLVED FIXED",
+  "summary": "Firefox sanitizes web fonts through OTS before use. OTS's expanding output stream allocates with a raw reallocator that never zeroes memory, and its Seek accepts any position up to the allocation size without zero-filling the gap. When a font's cmap carries a format-14 subtable with a large nonDefaultUVSOffset, OTS seeks forward and leaves an uninitialized-heap gap inside the emitted font. A companion format-4 subtable maps U+FFFF into that gap, so measuring the character with canvas measureText returns an advance derived from uninitialized heap, about two attacker-recoverable bytes per lookup over a roughly 64 KB window.",
+  "meta": {
+   "Vendor": "Mozilla Firefox",
+   "Component": "Core / Graphics: Text",
+   "Class": "Uninitialized Memory Disclosure",
+   "CWE": "908, 200",
+   "CVSS": "6.5 Medium (Mozilla)",
+   "Fixed in": "Firefox 154, ESR 115.39, ESR 140.14, ESR 153.1; Thunderbird 140.14, 153.1, 154",
+   "Interaction": "None, page load only"
+  }
+ },
+ {
+  "slug": "cve-2026-39154-cometchat-stored-xss",
+  "cve": "CVE-2026-39154",
+  "title": "Stored XSS in CometChat group messages",
+  "vendor": "CometChat",
+  "tag": "JS SDK 3.0.12",
+  "sev": "high",
+  "sevtx": "high",
+  "status": "VENDOR: SOLVED",
+  "summary": "An authenticated user can inject a persistent JavaScript payload into a group chat message through the data.text parameter of the /v3.0/messages endpoint. The payload is stored by the platform and, with no further action from the attacker after delivery, executes automatically in the browser of any group member who opens that conversation.",
+  "meta": {
+   "Vendor": "CometChat",
+   "Product": "CometChat JS SDK 3.0.12",
+   "Class": "Stored Cross-Site Scripting",
+   "CWE": "79",
+   "CVSS": "8.7 High (self-assessed), NVD pending",
+   "Endpoint": "/v3.0/messages, data.text",
+   "Interaction": "Runs when the group is opened"
+  }
+ },
+ {
+  "slug": "cve-2026-74970-webrender-fission-bypass",
+  "cve": "CVE-2026-74970",
+  "title": "Fission site-isolation bypass via missing PipelineId namespace check",
+  "vendor": "Mozilla Firefox",
+  "tag": "Graphics, WebRender",
+  "sev": "mod",
+  "sevtx": "sec-moderate",
+  "status": "RESOLVED FIXED",
+  "summary": "Under Fission each content process owns a PipelineId namespace. WebRenderBridgeParent::AddPipelineIdForCompositable, which runs in the GPU process, validated the pipeline against the root guard and this bridge's own set but never checked that the PipelineId's namespace belonged to the sending process, unlike the image, font, and blob key paths in the same file. A compromised content process could therefore register a PipelineId in another process's namespace and overwrite that origin's async image pipeline in the shared manager.",
+  "meta": {
+   "Vendor": "Mozilla Firefox",
+   "Component": "Core / Graphics: WebRender",
+   "Class": "Site-Isolation Bypass",
+   "CWE": "862, 284, 346",
+   "CVSS": "5.4 Medium (Mozilla)",
+   "Fixed in": "Firefox 154, ESR 153.1; Thunderbird 154, 153.1",
+   "Interaction": "Compromised content process"
+  }
+ },
+ {
+  "slug": "cve-2026-6765-formautofill-handlers",
+  "cve": "CVE-2026-6765",
+  "title": "Test-only FormAutofill handlers exposed in production",
+  "vendor": "Mozilla Firefox",
+  "tag": "Toolkit, Form Autofill",
+  "sev": "mod",
+  "sevtx": "sec-moderate",
+  "status": "VERIFIED FIXED",
+  "summary": "Firefox isolates web content in sandboxed child processes while sensitive data such as saved addresses and credit cards lives in the trusted parent process. The two sides communicate through message actors and the parent must never trust a message from content without a check.",
+  "meta": {
+   "Vendor": "Mozilla Firefox",
+   "Component": "Toolkit / Form Autofill",
+   "Class": "Information Disclosure, Improper Access Control",
+   "CWE": "359, 284, 862, 749",
+   "CVSS": "5.3 Medium (NVD)",
+   "Fixed in": "Firefox 150, ESR 140.10; Thunderbird 150, 140.10",
+   "Bounty": "1000 USD",
+   "Reporter": "Abdulaziz Alasaiqah, MFSA 2026-30"
+  }
+ }
+]
