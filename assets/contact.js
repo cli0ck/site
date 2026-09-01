@@ -7,6 +7,17 @@
   var f = document.getElementById('contactform');
   if (!f) return;
 
+  /* EmailJS delivers the branded HTML template in build/email/template.html.
+     Fill these three in (they are public by design — EmailJS keys are meant
+     for the browser and only send through your own templates). Until they
+     are set, the form falls back to Web3Forms, which delivers plain text. */
+  var EJS = {
+    service:  'SERVICE_ID',
+    template: 'TEMPLATE_ID',
+    key:      'PUBLIC_KEY'
+  };
+  var useEJS = EJS.service.indexOf('_ID') === -1 && EJS.key.indexOf('_KEY') === -1;
+
   var btn  = f.querySelector('.c-submit'),
       lbl  = btn.querySelector('.txt'),
       box  = document.getElementById('formstatus'),
@@ -112,12 +123,35 @@
     lbl.textContent = 'Sending';
     box.className = 'c-status';
 
-    fetch('https://api.web3forms.com/submit', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-      body: JSON.stringify(payload)
-    })
-      .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+    var req = useEJS
+      ? fetch('https://api.emailjs.com/api/v1.0/email/send', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            service_id: EJS.service,
+            template_id: EJS.template,
+            user_id: EJS.key,
+            template_params: {
+              name: g('name'),
+              email: g('email'),
+              company: g('company') || '—',
+              topic: g('topic'),
+              message: g('message'),
+              sent_at: now.toLocaleString('en-GB', {
+                day: 'numeric', month: 'long', year: 'numeric',
+                hour: '2-digit', minute: '2-digit', timeZone: 'UTC'
+              }) + ' UTC',
+              reply_to: g('email')
+            }
+          })
+        }).then(function (r) { return { ok: r.ok, j: { success: r.ok } }; })
+      : fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify(payload)
+        }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); });
+
+    req
       .then(function (res) {
         if (res.ok && res.j.success) {
           f.reset(); refresh();
