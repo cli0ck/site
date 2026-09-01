@@ -456,19 +456,17 @@ home = head('cli0ck | Vulnerability research',
     <div class="lg:pb-14 pb-10 px-3 text-center">
       <p class="text-white/40 text-xs tracking-[0.2em] uppercase">Reported to &middot; competed in &middot; certified by</p>
     </div>
-    <div class="logo-container" style="--num-logos:14">
+    <div class="logo-container" style="--num-logos:12">
       <div class="logo-slide">
         <img src="assets/logos/mozilla.svg" alt="Mozilla" loading="lazy">
         <img src="assets/logos/firefox.svg" alt="Mozilla Firefox" loading="lazy">
         <img src="assets/logos/cometchat.svg" alt="CometChat" loading="lazy">
-        <img src="assets/logos/haboob.svg" alt="HABOOB" loading="lazy">
         <img src="assets/logos/tuwaiq.png" alt="Tuwaiq Academy" loading="lazy">
         <img src="assets/logos/bugbountysa.svg" alt="BugBounty.sa" loading="lazy">
         <img src="assets/logos/ine.svg" alt="INE" loading="lazy">
         <img src="assets/logos/mozilla.svg" alt="Mozilla" loading="lazy">
         <img src="assets/logos/firefox.svg" alt="Mozilla Firefox" loading="lazy">
         <img src="assets/logos/cometchat.svg" alt="CometChat" loading="lazy">
-        <img src="assets/logos/haboob.svg" alt="HABOOB" loading="lazy">
         <img src="assets/logos/tuwaiq.png" alt="Tuwaiq Academy" loading="lazy">
         <img src="assets/logos/bugbountysa.svg" alt="BugBounty.sa" loading="lazy">
         <img src="assets/logos/ine.svg" alt="INE" loading="lazy">
@@ -477,14 +475,12 @@ home = head('cli0ck | Vulnerability research',
         <img src="assets/logos/mozilla.svg" alt="Mozilla" loading="lazy">
         <img src="assets/logos/firefox.svg" alt="Mozilla Firefox" loading="lazy">
         <img src="assets/logos/cometchat.svg" alt="CometChat" loading="lazy">
-        <img src="assets/logos/haboob.svg" alt="HABOOB" loading="lazy">
         <img src="assets/logos/tuwaiq.png" alt="Tuwaiq Academy" loading="lazy">
         <img src="assets/logos/bugbountysa.svg" alt="BugBounty.sa" loading="lazy">
         <img src="assets/logos/ine.svg" alt="INE" loading="lazy">
         <img src="assets/logos/mozilla.svg" alt="Mozilla" loading="lazy">
         <img src="assets/logos/firefox.svg" alt="Mozilla Firefox" loading="lazy">
         <img src="assets/logos/cometchat.svg" alt="CometChat" loading="lazy">
-        <img src="assets/logos/haboob.svg" alt="HABOOB" loading="lazy">
         <img src="assets/logos/tuwaiq.png" alt="Tuwaiq Academy" loading="lazy">
         <img src="assets/logos/bugbountysa.svg" alt="BugBounty.sa" loading="lazy">
         <img src="assets/logos/ine.svg" alt="INE" loading="lazy">
