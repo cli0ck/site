@@ -860,6 +860,8 @@ contact = head('Contact | cli0ck',
           <label>Leave this empty<input type="checkbox" name="botcheck" tabindex="-1"></label>
         </div>
 
+        <div class="c-prog" aria-hidden="true"><span id="cprog"></span></div>
+
         <div class="c-row">
           <label class="c-field">
             <span class="c-label">Your name <span class="req">*</span></span>
