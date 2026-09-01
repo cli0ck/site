@@ -1,0 +1,44 @@
+name: Forward contact enquiries
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  issues: write
+
+jobs:
+  forward:
+    if: contains(github.event.issue.labels.*.name, 'contact')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Email the enquiry to info@cli0ck.com
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.hostinger.com
+          server_port: 465
+          secure: true
+          username: ${{ secrets.MAIL_USER }}
+          password: ${{ secrets.MAIL_PASS }}
+          from: cli0ck contact <info@cli0ck.com>
+          to: info@cli0ck.com
+          subject: "[contact] ${{ github.event.issue.title }}"
+          body: |
+            From: ${{ github.event.issue.user.login }}
+            Issue: ${{ github.event.issue.html_url }}
+
+            ${{ github.event.issue.body }}
+
+      - name: Acknowledge and close
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner, repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: 'Received — this reached us by email. We read every message ourselves and reply when we can.'
+            })
+            await github.rest.issues.update({
+              owner: context.repo.owner, repo: context.repo.repo,
+              issue_number: context.issue.number, state: 'closed'
+            })

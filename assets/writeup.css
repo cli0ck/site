@@ -426,3 +426,18 @@ a[class*="rounded-full"][target="_blank"] > span{white-space:nowrap}
   .c-svc li{min-height:32px;display:inline-flex;align-items:center}
   .c-field{margin-bottom:22px}
 }
+
+/* contact routes — no form, no server, no third party */
+.c-route{
+  display:block;padding:26px 0;border-bottom:1px solid rgba(255,255,255,.13);
+  transition:padding-left .3s ease;
+}
+.c-route:hover{padding-left:10px}
+.c-route-go{
+  font-family:var(--c-mono);font-size:.75rem;letter-spacing:.1em;
+  text-transform:uppercase;color:#f59e0b;
+}
+@media (max-width:767px){
+  .c-route{padding:22px 0;min-height:44px}
+  .c-route:hover{padding-left:0}
+}

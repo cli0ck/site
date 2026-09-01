@@ -1,0 +1,44 @@
+name: Contact cli0ck
+description: Questions about the research, something to report, or an invitation to speak.
+title: "[contact] "
+labels: ["contact"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This reaches both of us by email. Please do not post credentials,
+        exploit code against third parties, or anyone else's data here —
+        this form is public. For a vulnerability in our own site, email
+        **security@cli0ck.com** instead.
+  - type: input
+    id: name
+    attributes:
+      label: Your name
+    validations:
+      required: true
+  - type: input
+    id: email
+    attributes:
+      label: Email we should reply to
+      placeholder: you@example.com
+    validations:
+      required: true
+  - type: dropdown
+    id: topic
+    attributes:
+      label: What is this about
+      options:
+        - About our research
+        - Report something to us
+        - Talk or workshop
+        - Work on something together
+        - Something else
+    validations:
+      required: true
+  - type: textarea
+    id: message
+    attributes:
+      label: Your message
+      description: Be concrete — it makes our reply useful.
+    validations:
+      required: true

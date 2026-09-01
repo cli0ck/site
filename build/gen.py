@@ -832,19 +832,27 @@ for ev in EVENTS:
     print(f"  ctf/{ev['slug']}.html  {len(page)}")
 
 # ============================================================ CONTACT
-ENDPOINT = 'https://form.cli0ck.com'
+ISSUE_NEW = 'https://github.com/cli0ck/site/issues/new?template=contact.yml'
 
-REASONS = [
- ('research',   'About our research',      'A question on a CVE or a write-up'),
- ('report',     'Report something to us',  'A bug in our own site or tooling'),
- ('speaking',   'Talk or workshop',        'A conference, meetup or CFP'),
- ('collab',     'Work on something together', 'A target, a tool, a paper'),
- ('other',      'Something else',          'Tell us below'),
+ROUTES = [
+ ('Questions about the research',
+  'A CVE, a write-up, or how we approached a target. We answer these ourselves.',
+  ISSUE_NEW, 'Open the form'),
+ ('Something to report',
+  'A vulnerability in our own site or tooling. Private, straight to our inbox.',
+  'mailto:security@cli0ck.com', 'security@cli0ck.com'),
+ ('A talk or a workshop',
+  'Conference, meetup, CFP, or a session for your engineers.',
+  'mailto:' + EMAIL, EMAIL),
+ ('Work on something together',
+  'A target, a tool, a paper. We collaborate with other researchers.',
+  ISSUE_NEW, 'Open the form'),
 ]
-picks = '\n'.join(f'''            <label class="c-pick">
-              <input type="checkbox" name="services" value="{k}">
-              <span><b>{t}</b><i>{d}</i></span>
-            </label>''' for k, t, d in REASONS)
+route_cards = chr(10).join(f'''        <a href="{u}" class="block c-route group" {'target="_blank" rel="noopener"' if u.startswith('http') else ''}>
+          <h3 class="font-semibold group-hover:text-accent lg:text-2xl mb-3 text-white text-xl transition-colors">{t}</h3>
+          <p class="leading-relaxed mb-4 text-white/60">{d}</p>
+          <span class="c-route-go">{lbl} &rarr;</span>
+        </a>''' for t, d, u, lbl in ROUTES)
 
 contact = head('Contact | cli0ck',
   'Two independent vulnerability researchers in Riyadh. Questions about the research, reports, and speaking invitations.', '',
@@ -856,62 +864,27 @@ contact = head('Contact | cli0ck',
     <div class="max-w-3xl mx-auto">
       <p class="font-mono mb-4 text-accent text-sm">$ contact --team cli0ck</p>
       <h1 class="font-semibold leading-tight lg:text-6xl mb-6 text-4xl text-white">Get in touch.</h1>
-      <p class="leading-relaxed lg:text-xl mb-12 text-lg text-white/60">We are two independent researchers in Riyadh who find and disclose vulnerabilities in software the world runs. If you have a question about the research, something to report, or an invitation to speak &mdash; this reaches both of us.</p>
+      <p class="leading-relaxed lg:text-xl mb-12 text-lg text-white/60">We are two independent researchers in Riyadh who find and disclose vulnerabilities in software the world runs. Pick whichever fits &mdash; all of it reaches both of us.</p>
 
-      <form id="contactform" data-endpoint="{ENDPOINT}" novalidate>
+      <div class="border-t border-white/15">
+{route_cards}
+      </div>
 
-        <div class="c-hp" aria-hidden="true">
-          <label>Leave this empty<input type="text" name="website" tabindex="-1" autocomplete="off"></label>
-        </div>
-
-        <div class="c-row">
-          <label class="c-field">
-            <span class="c-label">Your name <span class="req">*</span></span>
-            <input class="c-input" type="text" name="name" required autocomplete="name" placeholder="Full name">
-          </label>
-          <label class="c-field">
-            <span class="c-label">Email <span class="req">*</span></span>
-            <input class="c-input" type="email" name="email" required autocomplete="email" placeholder="you@example.com">
-          </label>
-        </div>
-
-        <div class="c-field">
-          <span class="c-label">What is this about</span>
-          <div class="c-picks">
-{picks}
-          </div>
-        </div>
-
-        <label class="c-field">
-          <span class="c-label">Your message <span class="req">*</span></span>
-          <textarea class="c-textarea" name="message" required placeholder="Be concrete &mdash; it makes our reply useful."></textarea>
-          <span class="c-help">Reporting a vulnerability in our own site or tooling? Use <a href="mailto:security@cli0ck.com" class="hover:underline text-accent">security@cli0ck.com</a> instead. Please do not send credentials or anyone else&rsquo;s data here.</span>
-        </label>
-
-        <button type="submit" class="c-submit">
-          <span class="txt">Send message</span>
-          <span class="chip" aria-hidden="true">&rarr;</span>
-        </button>
-
-        <div id="formstatus" class="c-status" role="status" aria-live="polite"></div>
-      </form>
-
-      <div class="border-t border-white/15 mt-16 pt-10">
-        <p class="c-eyebrow mb-5">Or reach us directly</p>
+      <div class="border-t border-white/15 mt-12 pt-10">
+        <p class="c-eyebrow mb-5">Everywhere else</p>
         <div class="flex flex-col gap-3">
           <a href="mailto:{EMAIL}" class="hover:underline text-accent">{EMAIL}</a>
-          <a href="mailto:security@cli0ck.com" class="hover:underline text-accent">security@cli0ck.com <span class="text-white/40">&mdash; vulnerabilities in our own site</span></a>
           <a href="{LI_AZ}" class="hover:underline text-accent" target="_blank" rel="noopener">Abdulaziz on LinkedIn</a>
           <a href="{LI_AH}" class="hover:underline text-accent" target="_blank" rel="noopener">Ahmed on LinkedIn</a>
+          <a href="{GITHUB}" class="hover:underline text-accent" target="_blank" rel="noopener">GitHub</a>
         </div>
-        <p class="leading-relaxed mt-8 text-sm text-white/40">We read everything ourselves and answer when we can. We are researchers, not a consultancy &mdash; we do not take on engagements.</p>
+        <p class="leading-relaxed mt-8 text-sm text-white/40">We read everything ourselves and answer when we can. We are researchers, not a consultancy &mdash; we do not take on engagements. The contact form is a public GitHub issue, so keep anything sensitive to email.</p>
       </div>
     </div>
   </section>
 </main>
 {foot('')}
 {MENU_JS}
-<script src="assets/contact.js" defer></script>
 </body>
 </html>
 '''
