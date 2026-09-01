@@ -832,27 +832,14 @@ for ev in EVENTS:
     print(f"  ctf/{ev['slug']}.html  {len(page)}")
 
 # ============================================================ CONTACT
-ISSUE_NEW = 'https://github.com/cli0ck/site/issues/new?template=contact.yml'
+# A plain HTML form. It GETs github.com/.../issues/new, and every field name
+# matches an `id:` in .github/ISSUE_TEMPLATE/contact.yml, so GitHub renders
+# its own issue form already filled in. No JavaScript, no server, no secrets.
+ISSUE_ACTION = 'https://github.com/cli0ck/site/issues/new'
 
-ROUTES = [
- ('Questions about the research',
-  'A CVE, a write-up, or how we approached a target. We answer these ourselves.',
-  ISSUE_NEW, 'Open the form'),
- ('Something to report',
-  'A vulnerability in our own site or tooling. Private, straight to our inbox.',
-  'mailto:security@cli0ck.com', 'security@cli0ck.com'),
- ('A talk or a workshop',
-  'Conference, meetup, CFP, or a session for your engineers.',
-  'mailto:' + EMAIL, EMAIL),
- ('Work on something together',
-  'A target, a tool, a paper. We collaborate with other researchers.',
-  ISSUE_NEW, 'Open the form'),
-]
-route_cards = chr(10).join(f'''        <a href="{u}" class="block c-route group" {'target="_blank" rel="noopener"' if u.startswith('http') else ''}>
-          <h3 class="font-semibold group-hover:text-accent lg:text-2xl mb-3 text-white text-xl transition-colors">{t}</h3>
-          <p class="leading-relaxed mb-4 text-white/60">{d}</p>
-          <span class="c-route-go">{lbl} &rarr;</span>
-        </a>''' for t, d, u, lbl in ROUTES)
+TOPICS = ['About our research', 'Report something to us', 'Talk or workshop',
+          'Work on something together', 'Something else']
+opts = chr(10).join(f'                <option>{t}</option>' for t in TOPICS)
 
 contact = head('Contact | cli0ck',
   'Two independent vulnerability researchers in Riyadh. Questions about the research, reports, and speaking invitations.', '',
@@ -864,27 +851,76 @@ contact = head('Contact | cli0ck',
     <div class="max-w-3xl mx-auto">
       <p class="font-mono mb-4 text-accent text-sm">$ contact --team cli0ck</p>
       <h1 class="font-semibold leading-tight lg:text-6xl mb-6 text-4xl text-white">Get in touch.</h1>
-      <p class="leading-relaxed lg:text-xl mb-12 text-lg text-white/60">We are two independent researchers in Riyadh who find and disclose vulnerabilities in software the world runs. Pick whichever fits &mdash; all of it reaches both of us.</p>
+      <p class="leading-relaxed lg:text-xl mb-12 text-lg text-white/60">We are two independent researchers in Riyadh who find and disclose vulnerabilities in software the world runs. Write below and it reaches both of us.</p>
 
-      <div class="border-t border-white/15">
-{route_cards}
-      </div>
+      <form action="{ISSUE_ACTION}" method="get" target="_blank" rel="noopener">
+        <input type="hidden" name="template" value="contact.yml">
+        <input type="hidden" name="labels" value="contact">
 
-      <div class="border-t border-white/15 mt-12 pt-10">
+        <div class="c-row">
+          <label class="c-field">
+            <span class="c-label">Your name <span class="req">*</span></span>
+            <input class="c-input" type="text" name="name" required autocomplete="name" placeholder="Full name">
+          </label>
+          <label class="c-field">
+            <span class="c-label">Email we reply to <span class="req">*</span></span>
+            <input class="c-input" type="email" name="email" required autocomplete="email" placeholder="you@example.com">
+          </label>
+        </div>
+
+        <label class="c-field">
+          <span class="c-label">What is this about</span>
+          <select class="c-select" name="topic">
+{opts}
+          </select>
+        </label>
+
+        <label class="c-field">
+          <span class="c-label">Your message <span class="req">*</span></span>
+          <textarea class="c-textarea" name="message" required placeholder="Be concrete &mdash; it makes our reply useful."></textarea>
+        </label>
+
+        <div class="c-actions">
+          <button type="submit" class="c-submit">
+            <span class="txt">Send message</span>
+            <span class="chip" aria-hidden="true">&rarr;</span>
+          </button>
+          <a class="c-alt" id="mailalt" href="mailto:{EMAIL}">or send it as an email instead</a>
+        </div>
+
+        <p class="c-help" style="margin-top:18px">Sending opens GitHub with everything you wrote already filled in &mdash; one click there and it reaches us. That needs a GitHub account and the message becomes public. No account, or something you would rather keep private? Use the email link &mdash; it opens your mail app with the same text. Reporting a vulnerability in <em>our</em> site? <a href="mailto:security@cli0ck.com" class="hover:underline text-accent">security@cli0ck.com</a>.</p>
+      </form>
+
+      <div class="border-t border-white/15 mt-16 pt-10">
         <p class="c-eyebrow mb-5">Everywhere else</p>
         <div class="flex flex-col gap-3">
           <a href="mailto:{EMAIL}" class="hover:underline text-accent">{EMAIL}</a>
+          <a href="mailto:security@cli0ck.com" class="hover:underline text-accent">security@cli0ck.com <span class="text-white/40">&mdash; vulnerabilities in our own site</span></a>
           <a href="{LI_AZ}" class="hover:underline text-accent" target="_blank" rel="noopener">Abdulaziz on LinkedIn</a>
           <a href="{LI_AH}" class="hover:underline text-accent" target="_blank" rel="noopener">Ahmed on LinkedIn</a>
           <a href="{GITHUB}" class="hover:underline text-accent" target="_blank" rel="noopener">GitHub</a>
         </div>
-        <p class="leading-relaxed mt-8 text-sm text-white/40">We read everything ourselves and answer when we can. We are researchers, not a consultancy &mdash; we do not take on engagements. The contact form is a public GitHub issue, so keep anything sensitive to email.</p>
+        <p class="leading-relaxed mt-8 text-sm text-white/40">We read everything ourselves and answer when we can. We are researchers, not a consultancy &mdash; we do not take on engagements.</p>
       </div>
     </div>
   </section>
 </main>
 {foot('')}
 {MENU_JS}
+<script>
+/* keeps the email fallback carrying whatever is typed above */
+(function(){{
+  var f=document.querySelector('form[method=get]'), a=document.getElementById('mailalt');
+  if(!f||!a) return;
+  function sync(){{
+    var d=new FormData(f), g=function(k){{return (d.get(k)||'').toString().trim();}};
+    var body=['Name: '+g('name'),'Email: '+g('email'),'Topic: '+g('topic'),'','' + g('message')].join('\\n');
+    a.href='mailto:{EMAIL}?subject='+encodeURIComponent('[contact] '+(g('name')||'Enquiry'))
+          +'&body='+encodeURIComponent(body);
+  }}
+  f.addEventListener('input',sync); f.addEventListener('change',sync); sync();
+}})();
+</script>
 </body>
 </html>
 '''
