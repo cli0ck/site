@@ -832,10 +832,12 @@ for ev in EVENTS:
     print(f"  ctf/{ev['slug']}.html  {len(page)}")
 
 # ============================================================ CONTACT
-# A plain HTML form. It GETs github.com/.../issues/new, and every field name
-# matches an `id:` in .github/ISSUE_TEMPLATE/contact.yml, so GitHub renders
-# its own issue form already filled in. No JavaScript, no server, no secrets.
-ISSUE_ACTION = 'https://github.com/cli0ck/site/issues/new'
+# The visitor fills this in and presses send. Nothing to sign into, nothing
+# opens. The post goes to Web3Forms, which relays it to info@cli0ck.com with
+# their address as Reply-To. The access key is public by design — it only
+# ever delivers to the address it was issued for, so it is useless to anyone
+# else. Requested for info@cli0ck.com; paste it below.
+W3F_KEY = 'PASTE_ACCESS_KEY_HERE'
 
 TOPICS = ['About our research', 'Report something to us', 'Talk or workshop',
           'Work on something together', 'Something else']
@@ -851,11 +853,12 @@ contact = head('Contact | cli0ck',
     <div class="max-w-3xl mx-auto">
       <p class="font-mono mb-4 text-accent text-sm">$ contact --team cli0ck</p>
       <h1 class="font-semibold leading-tight lg:text-6xl mb-6 text-4xl text-white">Get in touch.</h1>
-      <p class="leading-relaxed lg:text-xl mb-12 text-lg text-white/60">We are two independent researchers in Riyadh who find and disclose vulnerabilities in software the world runs. Write below and it reaches both of us.</p>
+      <p class="leading-relaxed lg:text-xl mb-12 text-lg text-white/60">We are two independent researchers in Riyadh who find and disclose vulnerabilities in software the world runs. Write below &mdash; it reaches both of us, and we reply to the address you give.</p>
 
-      <form action="{ISSUE_ACTION}" method="get" target="_blank" rel="noopener">
-        <input type="hidden" name="template" value="contact.yml">
-        <input type="hidden" name="labels" value="contact">
+      <form id="contactform" data-key="{W3F_KEY}" novalidate>
+        <div class="c-hp" aria-hidden="true">
+          <label>Leave this empty<input type="checkbox" name="botcheck" tabindex="-1"></label>
+        </div>
 
         <div class="c-row">
           <label class="c-field">
@@ -868,27 +871,31 @@ contact = head('Contact | cli0ck',
           </label>
         </div>
 
-        <label class="c-field">
-          <span class="c-label">What is this about</span>
-          <select class="c-select" name="topic">
+        <div class="c-row">
+          <label class="c-field">
+            <span class="c-label">Company or team</span>
+            <input class="c-input" type="text" name="company" autocomplete="organization" placeholder="Optional">
+          </label>
+          <label class="c-field">
+            <span class="c-label">What is this about</span>
+            <select class="c-select" name="topic">
 {opts}
-          </select>
-        </label>
+            </select>
+          </label>
+        </div>
 
         <label class="c-field">
           <span class="c-label">Your message <span class="req">*</span></span>
           <textarea class="c-textarea" name="message" required placeholder="Be concrete &mdash; it makes our reply useful."></textarea>
+          <span class="c-help">Reporting a vulnerability in <em>our</em> site or tooling? Email <a href="mailto:security@cli0ck.com" class="hover:underline text-accent">security@cli0ck.com</a> instead. Please do not send credentials or anyone else&rsquo;s data.</span>
         </label>
 
-        <div class="c-actions">
-          <button type="submit" class="c-submit">
-            <span class="txt">Send message</span>
-            <span class="chip" aria-hidden="true">&rarr;</span>
-          </button>
-          <a class="c-alt" id="mailalt" href="mailto:{EMAIL}">or send it as an email instead</a>
-        </div>
+        <button type="submit" class="c-submit">
+          <span class="txt">Send message</span>
+          <span class="chip" aria-hidden="true">&rarr;</span>
+        </button>
 
-        <p class="c-help" style="margin-top:18px">Sending opens GitHub with everything you wrote already filled in &mdash; one click there and it reaches us. That needs a GitHub account and the message becomes public. No account, or something you would rather keep private? Use the email link &mdash; it opens your mail app with the same text. Reporting a vulnerability in <em>our</em> site? <a href="mailto:security@cli0ck.com" class="hover:underline text-accent">security@cli0ck.com</a>.</p>
+        <div id="formstatus" class="c-status" role="status" aria-live="polite"></div>
       </form>
 
       <div class="border-t border-white/15 mt-16 pt-10">
@@ -907,20 +914,7 @@ contact = head('Contact | cli0ck',
 </main>
 {foot('')}
 {MENU_JS}
-<script>
-/* keeps the email fallback carrying whatever is typed above */
-(function(){{
-  var f=document.querySelector('form[method=get]'), a=document.getElementById('mailalt');
-  if(!f||!a) return;
-  function sync(){{
-    var d=new FormData(f), g=function(k){{return (d.get(k)||'').toString().trim();}};
-    var body=['Name: '+g('name'),'Email: '+g('email'),'Topic: '+g('topic'),'','' + g('message')].join('\\n');
-    a.href='mailto:{EMAIL}?subject='+encodeURIComponent('[contact] '+(g('name')||'Enquiry'))
-          +'&body='+encodeURIComponent(body);
-  }}
-  f.addEventListener('input',sync); f.addEventListener('change',sync); sync();
-}})();
-</script>
+<script src="assets/contact.js" defer></script>
 </body>
 </html>
 '''
