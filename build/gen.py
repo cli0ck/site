@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Build the cli0ck site: home, research index, and one page per writeup."""
-import re, os, html as H, json
+import re, os, html as H, json, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import ctf_mod
 
 # Source writeups (exported from azoz.my) and the output root.
 # Override with CLI0CK_SRC / CLI0CK_OUT if your checkout lives elsewhere.
@@ -257,6 +259,7 @@ def hdr(p):
         <ul class="flex flex-col font-medium lg:flex-row lg:mt-0 lg:space-x-8 mt-4 text-xl">
 {li(p+'index.html','Home')}
 {li(p+'research.html','Research')}
+{li(p+'ctf.html','CTF')}
 {li(p+'index.html#crew','The Crew')}
 {li(p+'index.html#record','Record')}
 {li('mailto:'+EMAIL,'Contact')}
@@ -290,6 +293,7 @@ def foot(p):
         <ul class="flex flex-col">
           <li><a href="{p}index.html" class="text-white">Home</a></li>
           <li><a href="{p}research.html" class="text-white">Research</a></li>
+          <li><a href="{p}ctf.html" class="text-white">CTF</a></li>
           <li><a href="{p}index.html#crew" class="text-white">The Crew</a></li>
           <li><a href="{p}index.html#record" class="text-white">Record</a></li>
           <li><a href="mailto:{EMAIL}" class="text-white">Contact</a></li>
@@ -692,3 +696,137 @@ for i, w in enumerate(WRITEUPS):
 '''
     open(f"{OUT}/research/{w['slug']}.html", 'w', encoding='utf-8').write(page)
     print(f"  research/{w['slug']}.html  {len(page)}")
+
+# ============================================================ CTF
+EVENTS = ctf_mod.load_events()
+
+def _chal_card(ev, c):
+    cat, cls = ctf_mod.cat_of(c)
+    pts = c.get('points','')
+    bits = []
+    if pts and pts != 'TODO': bits.append(pts + ' pts')
+    if c.get('solves'): bits.append(c['solves'] + (' solves' if c['solves'].isdigit() else ''))
+    if c.get('by'): bits.append('solved by ' + c['by'])
+    return f'''        <a href="ctf/{ev['slug']}.html#{c['slug']}" class="block group rx-card">
+          <div class="aspect-[2/3] bg-secondary border border-white/10 flex flex-col group-hover:border-accent justify-end lg:p-6 mb-4 p-5 rounded-lg transition-colors">
+            <span class="bg-accent block h-px mb-4 w-8"></span>
+            <h2 class="break-words font-semibold group-hover:text-accent leading-snug lg:text-xl text-lg text-white transition-colors">{H.escape(c['name'])}</h2>
+          </div>
+          <p class="c-meta mb-2">{cat}{' &middot; ' + H.escape(' &middot; '.join(bits)) if bits else ''}</p>
+          <h2 class="font-semibold group-hover:text-accent leading-snug mb-2 text-lg text-white transition-colors">{H.escape(ev['event'])}</h2>
+        </a>'''
+
+def _event_block(ev):
+    cats = sorted({ctf_mod.cat_of(c)[0] for c in ev['challenges']})
+    chips = ''.join(f'<span class="{C_PILL}">{c}</span>' for c in cats)
+    return f'''      <a href="ctf/{ev['slug']}.html" class="block group lg:py-10 py-8">
+        <div class="flex gap-6 items-baseline justify-between mb-3">
+          <span class="lg:text-sm text-white/50 text-xs tracking-[0.2em] uppercase">{H.escape(ev.get('location',''))}</span>
+          <span class="c-meta whitespace-nowrap">{H.escape(ev.get('date',''))} &middot; {H.escape(ev.get('place',''))}</span>
+        </div>
+        <p class="font-medium group-hover:text-accent leading-snug lg:text-3xl text-white text-xl transition-colors">{H.escape(ev['event'])}<span class="group-hover:opacity-100 inline-block ml-3 opacity-0 transition-opacity">&rarr;</span></p>
+        <p class="leading-relaxed lg:text-lg mt-3 text-base text-white/60">{H.escape(ev.get('blurb',''))}</p>
+        <div class="flex flex-wrap gap-2 mt-5">{chips}<span class="{C_PILL}">{len(ev['challenges'])} write-up{'s' if len(ev['challenges'])!=1 else ''}</span></div>
+      </a>'''
+
+n_ev = len(EVENTS)
+n_ch = sum(len(e['challenges']) for e in EVENTS)
+
+ctf_index = head('CTF write-ups | cli0ck',
+  'How cli0ck solves competition challenges: recon, the bug, the exploit, and what to look for next time.', '',
+  '\n<link href="assets/writeup.css" rel="stylesheet">') + f'''
+
+{hdr('')}
+<main>
+  <section class="lg:pb-24 lg:pt-40 lg:px-6 pb-16 pt-32 px-3">
+    <div class="max-w-screen-xl mx-auto">
+      <p class="font-mono mb-4 text-accent text-sm">$ cat solves.txt</p>
+      <h1 class="font-semibold leading-tight lg:text-6xl max-w-4xl mb-6 text-4xl text-white">The same method, on a clock.</h1>
+      <p class="leading-relaxed lg:mb-16 lg:text-xl max-w-2xl mb-12 text-lg text-white/60">Competition is the closest thing to an engagement deadline. These are our solves &mdash; recon, the actual bug, the exploit as we ran it, and what we would look for next time.</p>
+
+      <div class="border-b border-t border-white/15 divide-white/15 divide-y max-w-4xl">
+{chr(10).join(_event_block(e) for e in EVENTS) if EVENTS else '        <p class="lg:py-10 py-8 text-white/40">No write-ups published yet.</p>'}
+      </div>
+
+      <div class="border-t border-white/15 gap-6 grid grid-cols-2 lg:grid-cols-4 mt-16 pt-12">
+        <div><p class="font-semibold lg:text-5xl text-3xl text-white">{n_ev}</p><p class="mt-2 text-white/40 text-xs tracking-[0.2em] uppercase">Events</p></div>
+        <div><p class="font-semibold lg:text-5xl text-3xl text-white">{n_ch}</p><p class="mt-2 text-white/40 text-xs tracking-[0.2em] uppercase">Challenge write-ups</p></div>
+        <div><p class="font-semibold lg:text-5xl text-3xl text-white">1st</p><p class="mt-2 text-white/40 text-xs tracking-[0.2em] uppercase">Blood, reversing track</p></div>
+        <div><p class="font-semibold lg:text-5xl text-3xl text-white">4</p><p class="mt-2 text-white/40 text-xs tracking-[0.2em] uppercase">Podium finishes</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-secondary lg:px-10 lg:py-20 px-3 py-16">
+    <div class="max-w-screen-xl mx-auto text-center">
+      <h2 class="font-semibold lg:text-5xl mb-4 text-3xl text-white">Let&rsquo;s talk</h2>
+      <p class="font-light lg:mb-10 lg:text-2xl mb-8 text-lg text-white/80">Tell us what you&rsquo;re building, and what keeps you up at night.</p>
+      {cta('Put us on your target', 'mailto:' + EMAIL)}
+    </div>
+  </section>
+</main>
+{foot('')}
+{MENU_JS}
+</body>
+</html>
+'''
+open(f'{OUT}/ctf.html','w',encoding='utf-8').write(ctf_index)
+print(f'  ctf.html  {len(ctf_index)}')
+
+os.makedirs(f'{OUT}/ctf', exist_ok=True)
+for ev in EVENTS:
+    blocks = []
+    for c in ev['challenges']:
+        cat, _ = ctf_mod.cat_of(c)
+        meta_bits = []
+        for k, lbl in [('category','Category'),('points','Points'),('solves','Solves'),('by','Solved by'),('author','Author')]:
+            v = c.get(k)
+            if v and v != 'TODO':
+                meta_bits.append(f'''          <div>
+            <p class="text-white/40 text-xs tracking-[0.2em] uppercase">{lbl}</p>
+            <p class="mt-1 text-white">{H.escape(cat if k=='category' else v)}</p>
+          </div>''')
+        blocks.append(f'''      <article id="{c['slug']}" class="border-t border-white/15 mt-16 pt-12 scroll-mt-24">
+        <p class="c-eyebrow mb-4">{cat}</p>
+        <h2 class="font-semibold leading-tight lg:text-4xl mb-6 text-2xl text-white">{H.escape(c['name'])}</h2>
+        <div class="border border-white/10 gap-6 grid grid-cols-2 lg:grid-cols-4 md:grid-cols-3 mb-10 p-6 rounded-lg">
+{chr(10).join(meta_bits)}
+        </div>
+        {ctf_mod.render(c['body'])}
+      </article>''')
+
+    page = head(f"{H.escape(ev['event'])} | cli0ck",
+                ev.get('blurb','')[:180], '../',
+                '\n<link href="../assets/writeup.css" rel="stylesheet">') + f'''
+
+{hdr('../')}
+<main>
+  <article class="lg:pb-24 lg:pt-40 lg:px-6 pb-16 pt-32 px-3">
+    <div class="max-w-3xl mx-auto">
+      <a href="../ctf.html" class="hover:text-accent text-white/40 text-xs tracking-[0.2em] transition-colors uppercase">&larr; CTF write-ups</a>
+      <h1 class="font-semibold leading-tight lg:text-5xl mb-4 mt-6 text-3xl text-white">{H.escape(ev['event'])}</h1>
+      <p class="font-light lg:text-xl mb-4 text-lg text-white/80">{H.escape(ev.get('blurb',''))}</p>
+      <div class="border-b border-white/15 pb-10">
+        <p class="font-medium text-sm text-white tracking-[0.15em] uppercase">{H.escape(ev.get('place',''))}</p>
+        <p class="mt-2 text-white/40 text-xs tracking-[0.15em] uppercase">{H.escape(ev.get('date',''))} &middot; {H.escape(ev.get('location',''))}</p>
+        <div class="flex flex-wrap gap-2 mt-6">{''.join(f'<span class="{C_PILL}">{ctf_mod.cat_of(c)[0]}</span>' for c in ev['challenges'])}</div>
+      </div>
+{chr(10).join(blocks)}
+    </div>
+  </article>
+
+  <section class="bg-secondary lg:px-10 lg:py-20 px-3 py-16">
+    <div class="max-w-screen-xl mx-auto text-center">
+      <h2 class="font-semibold lg:text-5xl mb-4 text-3xl text-white">Let&rsquo;s talk</h2>
+      <p class="font-light lg:mb-10 lg:text-2xl mb-8 text-lg text-white/80">Tell us what you&rsquo;re building, and what keeps you up at night.</p>
+      {cta('Put us on your target', 'mailto:' + EMAIL)}
+    </div>
+  </section>
+</main>
+{foot('../')}
+{MENU_JS}
+</body>
+</html>
+'''
+    open(f"{OUT}/ctf/{ev['slug']}.html",'w',encoding='utf-8').write(page)
+    print(f"  ctf/{ev['slug']}.html  {len(page)}")

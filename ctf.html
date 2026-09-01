@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Root-cause analysis and a working proof of concept for every vulnerability cli0ck has disclosed.">
+<meta name="description" content="How cli0ck solves competition challenges: recon, the bug, the exploit, and what to look for next time.">
 <meta name="theme-color" content="#1c1917">
-<title>Research | cli0ck</title>
+<title>CTF write-ups | cli0ck</title>
 <link href="assets/site.css" rel="stylesheet">
 <link href="assets/writeup.css" rel="stylesheet">
 </head>
@@ -39,70 +39,27 @@
 <main>
   <section class="lg:pb-24 lg:pt-40 lg:px-6 pb-16 pt-32 px-3">
     <div class="max-w-screen-xl mx-auto">
-      <p class="font-mono mb-4 text-accent text-sm">$ cat cves.txt</p>
-      <h1 class="font-semibold leading-tight lg:text-6xl max-w-4xl mb-6 text-4xl text-white">Root cause, proof of concept, and the patch that followed.</h1>
-      <p class="leading-relaxed lg:mb-16 lg:text-xl max-w-2xl mb-12 text-lg text-white/60">Every vulnerability below was reported privately, reproduced, root-caused, and fixed by the vendor before it was published here. Nothing on this page is a claim you have to take on trust.</p>
+      <p class="font-mono mb-4 text-accent text-sm">$ cat solves.txt</p>
+      <h1 class="font-semibold leading-tight lg:text-6xl max-w-4xl mb-6 text-4xl text-white">The same method, on a clock.</h1>
+      <p class="leading-relaxed lg:mb-16 lg:text-xl max-w-2xl mb-12 text-lg text-white/60">Competition is the closest thing to an engagement deadline. These are our solves &mdash; recon, the actual bug, the exploit as we ran it, and what we would look for next time.</p>
 
-      <div class="gap-x-6 gap-y-12 grid grid-cols-2 lg:grid-cols-4 md:grid-cols-3">
-        <a href="research/cve-2026-74943-rasterimage-use-after-free.html" class="block group rx-card">
-          <div class="aspect-[2/3] bg-secondary mb-4 overflow-hidden rounded-lg">
-            <img src="assets/posters/firefox.svg" alt="Mozilla Firefox" loading="lazy" class="duration-300 group-hover:scale-[1.03] h-full object-contain p-6 transition-transform w-full">
-          </div>
-          <p class="c-meta mb-2">CVE-2026-74943 &middot; Critical</p>
-          <h2 class="font-semibold group-hover:text-accent leading-snug mb-2 text-lg text-white transition-colors">Use-after-free in RasterImage surface discard</h2>
-          <p class="leading-snug text-sm text-white/60">Firefox stores decoded image surfaces in a SurfaceCache keyed by a raw, non-owning pointer to the owning image, and notifies that…</p>
-        </a>
-        <a href="research/cve-2026-74945-font-heap-disclosure.html" class="block group rx-card">
-          <div class="aspect-[2/3] bg-secondary mb-4 overflow-hidden rounded-lg">
-            <img src="assets/posters/firefox.svg" alt="Mozilla Firefox" loading="lazy" class="duration-300 group-hover:scale-[1.03] h-full object-contain p-6 transition-transform w-full">
-          </div>
-          <p class="c-meta mb-2">CVE-2026-74945 &middot; High</p>
-          <h2 class="font-semibold group-hover:text-accent leading-snug mb-2 text-lg text-white transition-colors">Uninitialized heap disclosure through a crafted web font</h2>
-          <p class="leading-snug text-sm text-white/60">Firefox sanitizes web fonts through OTS before use.</p>
-        </a>
-        <a href="research/cve-2026-39154-cometchat-stored-xss.html" class="block group rx-card">
-          <div class="aspect-[2/3] bg-secondary mb-4 overflow-hidden rounded-lg">
-            <img src="assets/posters/cometchat.svg" alt="CometChat" loading="lazy" class="duration-300 group-hover:scale-[1.03] h-full object-contain p-6 transition-transform w-full">
-          </div>
-          <p class="c-meta mb-2">CVE-2026-39154 &middot; High</p>
-          <h2 class="font-semibold group-hover:text-accent leading-snug mb-2 text-lg text-white transition-colors">Stored XSS in CometChat group messages</h2>
-          <p class="leading-snug text-sm text-white/60">An authenticated user can inject a persistent JavaScript payload into a group chat message through the data.text parameter of the…</p>
-        </a>
-        <a href="research/cve-2026-74970-webrender-fission-bypass.html" class="block group rx-card">
-          <div class="aspect-[2/3] bg-secondary mb-4 overflow-hidden rounded-lg">
-            <img src="assets/posters/firefox.svg" alt="Mozilla Firefox" loading="lazy" class="duration-300 group-hover:scale-[1.03] h-full object-contain p-6 transition-transform w-full">
-          </div>
-          <p class="c-meta mb-2">CVE-2026-74970 &middot; Moderate</p>
-          <h2 class="font-semibold group-hover:text-accent leading-snug mb-2 text-lg text-white transition-colors">Fission site-isolation bypass via missing PipelineId namespace check</h2>
-          <p class="leading-snug text-sm text-white/60">Under Fission each content process owns a PipelineId namespace.</p>
-        </a>
-        <a href="research/cve-2026-6765-formautofill-handlers.html" class="block group rx-card">
-          <div class="aspect-[2/3] bg-secondary mb-4 overflow-hidden rounded-lg">
-            <img src="assets/posters/firefox.svg" alt="Mozilla Firefox" loading="lazy" class="duration-300 group-hover:scale-[1.03] h-full object-contain p-6 transition-transform w-full">
-          </div>
-          <p class="c-meta mb-2">CVE-2026-6765 &middot; Moderate</p>
-          <h2 class="font-semibold group-hover:text-accent leading-snug mb-2 text-lg text-white transition-colors">Test-only FormAutofill handlers exposed in production</h2>
-          <p class="leading-snug text-sm text-white/60">Firefox isolates web content in sandboxed child processes while sensitive data such as saved addresses and credit cards lives in…</p>
-        </a>
+      <div class="border-b border-t border-white/15 divide-white/15 divide-y max-w-4xl">
+      <a href="ctf/tuwaiq-cyber-challenge.html" class="block group lg:py-10 py-8">
+        <div class="flex gap-6 items-baseline justify-between mb-3">
+          <span class="lg:text-sm text-white/50 text-xs tracking-[0.2em] uppercase">Riyadh, Saudi Arabia</span>
+          <span class="c-meta whitespace-nowrap">2026-01 &middot; 3rd place</span>
+        </div>
+        <p class="font-medium group-hover:text-accent leading-snug lg:text-3xl text-white text-xl transition-colors">Tuwaiq Cyber Challenge<span class="group-hover:opacity-100 inline-block ml-3 opacity-0 transition-opacity">&rarr;</span></p>
+        <p class="leading-relaxed lg:text-lg mt-3 text-base text-white/60">Third overall against dozens of competitors, and first blood on the reverse engineering track — first team on the board to solve it.</p>
+        <div class="flex flex-wrap gap-2 mt-5"><span class="border border-white/15 hover:border-accent/40 hover:text-accent px-3 py-1 rounded-full text-white/60 text-xs transition-colors">Reverse Engineering</span><span class="border border-white/15 hover:border-accent/40 hover:text-accent px-3 py-1 rounded-full text-white/60 text-xs transition-colors">1 write-up</span></div>
+      </a>
       </div>
 
       <div class="border-t border-white/15 gap-6 grid grid-cols-2 lg:grid-cols-4 mt-16 pt-12">
-        <div>
-          <p class="font-semibold lg:text-5xl text-3xl text-white">5</p>
-          <p class="mt-2 text-white/40 text-xs tracking-[0.2em] uppercase">CVEs published</p>
-        </div>
-        <div>
-          <p class="font-semibold lg:text-5xl text-3xl text-white">9.8</p>
-          <p class="mt-2 text-white/40 text-xs tracking-[0.2em] uppercase">Highest CVSS</p>
-        </div>
-        <div>
-          <p class="font-semibold lg:text-5xl text-3xl text-white">2</p>
-          <p class="mt-2 text-white/40 text-xs tracking-[0.2em] uppercase">Vendors credited</p>
-        </div>
-        <div>
-          <p class="font-semibold lg:text-5xl text-3xl text-white">100%</p>
-          <p class="mt-2 text-white/40 text-xs tracking-[0.2em] uppercase">Fixed before publication</p>
-        </div>
+        <div><p class="font-semibold lg:text-5xl text-3xl text-white">1</p><p class="mt-2 text-white/40 text-xs tracking-[0.2em] uppercase">Events</p></div>
+        <div><p class="font-semibold lg:text-5xl text-3xl text-white">1</p><p class="mt-2 text-white/40 text-xs tracking-[0.2em] uppercase">Challenge write-ups</p></div>
+        <div><p class="font-semibold lg:text-5xl text-3xl text-white">1st</p><p class="mt-2 text-white/40 text-xs tracking-[0.2em] uppercase">Blood, reversing track</p></div>
+        <div><p class="font-semibold lg:text-5xl text-3xl text-white">4</p><p class="mt-2 text-white/40 text-xs tracking-[0.2em] uppercase">Podium finishes</p></div>
       </div>
     </div>
   </section>
