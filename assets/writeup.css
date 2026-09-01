@@ -417,3 +417,12 @@ a[class*="rounded-full"][target="_blank"] > span{white-space:nowrap}
   border:1px solid rgba(255,255,255,.15);border-radius:9999px;
   padding:5px 12px;color:rgba(255,255,255,.55);
 }
+
+/* 44px floor for every control on a phone */
+@media (max-width:767px){
+  .c-input,.c-select{min-height:48px}
+  .c-submit{min-height:56px;width:100%;justify-content:space-between}
+  .c-pick span{min-height:56px;display:flex;flex-direction:column;justify-content:center}
+  .c-svc li{min-height:32px;display:inline-flex;align-items:center}
+  .c-field{margin-bottom:22px}
+}

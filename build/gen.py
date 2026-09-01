@@ -882,7 +882,7 @@ contact = head('Contact | cli0ck',
   </section>
 
   <section class="lg:px-6 lg:pb-24 pb-16 px-3">
-    <div class="gap-12 grid grid-cols-1 lg:gap-20 lg:grid-cols-2 max-w-screen-xl mx-auto">
+    <div class="gap-8 grid grid-cols-1 lg:gap-12 md:grid-cols-2 max-w-screen-xl mx-auto">
 
       <div>
         <p class="c-eyebrow mb-6">What we do</p>
