@@ -450,7 +450,7 @@ home = head('cli0ck | Vulnerability research',
       <div class="max-w-screen-xl mb-20 mx-auto">
         <p class="c-eyebrow mb-5">Vulnerability research &middot; Riyadh</p>
         <h1 class="font-semibold lg:text-6xl mb-5 text-3xl text-white">Five CVEs. Every one fixed before you read this.</h1>
-        <p class="font-light lg:mb-12 lg:text-2xl mb-8 text-lg text-white/80">Two researchers out of Riyadh. We break browsers and the software around them, then hand the vendor the root cause and the patch.</p>
+        <p class="font-light lg:mb-10 lg:text-2xl mb-8 text-lg text-white/80">Two researchers out of Riyadh. We break browsers and the software around them, then hand the vendor the root cause and the patch.</p>
         {cta('Put us on your target', 'mailto:' + EMAIL)}
       </div>
     </div>
@@ -502,7 +502,7 @@ home = head('cli0ck | Vulnerability research',
     </div>
   </section>
 
-  <section id="research" class="lg:px-6 lg:py-24 px-3 py-16">
+  <section id="research" class="lg:px-6 lg:py-16 px-3 py-16">
     <div class="max-w-screen-xl mx-auto">
       <p class="font-mono mb-4 text-accent text-sm">$ cat cves.txt</p>
       <h2 class="font-semibold leading-tight lg:mb-16 lg:text-5xl max-w-4xl mb-12 text-3xl text-white">The work, as the vendors recorded it</h2>
@@ -514,10 +514,10 @@ home = head('cli0ck | Vulnerability research',
   </section>
 
 
-  <section id="reach" class="lg:px-6 lg:py-24 px-3 py-16">
+  <section id="reach" class="lg:px-6 lg:py-16 px-3 py-16">
     <div class="max-w-screen-xl mx-auto">
       <p class="c-eyebrow mb-5">Reach</p>
-      <h2 class="font-semibold leading-tight lg:mb-12 lg:text-5xl mb-4 max-w-3xl text-3xl text-white">Five bugs found in Riyadh. Patched on every continent.</h2>
+      <h2 class="font-semibold leading-tight lg:mb-10 lg:text-5xl mb-4 max-w-3xl text-3xl text-white">Five bugs found in Riyadh. Patched on every continent.</h2>
       <p class="leading-relaxed lg:text-xl max-w-3xl text-lg text-white/60">Every vulnerability below was reported privately from here, fixed by the vendor, and shipped in a release that reached the whole install base. The scores and statuses below are pulled live from NIST&rsquo;s National Vulnerability Database every time this page loads &mdash; our disclosure record, read straight from the source. Not telemetry, and not a threat feed.</p>
       <div class="c-map-wrap lg:mt-16 mt-10">
         <canvas class="c-map" id="reachmap" aria-label="World map showing disclosures reported from Riyadh and the releases that carried the fixes worldwide"></canvas>
@@ -543,7 +543,7 @@ home = head('cli0ck | Vulnerability research',
     </div>
   </section>
 
-  <section id="crew" class="bg-secondary lg:px-6 lg:py-24 px-3 py-16">
+  <section id="crew" class="bg-secondary lg:px-6 lg:py-16 px-3 py-16">
     <div class="max-w-screen-xl mx-auto">
       <div class="lg:mb-16 max-w-3xl mb-12">
         <p class="mb-4 text-white/40 text-xs tracking-[0.2em] uppercase">The crew</p>
@@ -556,7 +556,7 @@ home = head('cli0ck | Vulnerability research',
   </section>
 
   <section id="record" class="bg-white">
-    <div class="lg:py-24 py-16">
+    <div class="lg:py-16 py-16">
       <div class="lg:pb-16 max-w-screen-xl mx-auto pb-12 px-3">
         <p class="c-eyebrow c-eyebrow--light mb-5">Third-party record</p>
         <h2 class="font-semibold lg:text-5xl max-w-3xl text-3xl">Don&rsquo;t take our word for it.</h2>
@@ -572,7 +572,7 @@ home = head('cli0ck | Vulnerability research',
   <section class="bg-primary lg:px-10 lg:py-20 px-3 py-16">
     <div class="max-w-screen-xl mx-auto text-center">
       <h2 class="font-semibold lg:text-5xl mb-4 text-3xl text-white">Let&rsquo;s talk</h2>
-      <p class="font-light lg:mb-12 lg:text-2xl mb-8 text-lg text-white/80">Tell us what you&rsquo;re building, and what keeps you up at night.</p>
+      <p class="font-light lg:mb-10 lg:text-2xl mb-8 text-lg text-white/80">Tell us what you&rsquo;re building, and what keeps you up at night.</p>
       {cta('Put us on your target', 'mailto:' + EMAIL)}
     </div>
   </section>
@@ -626,7 +626,7 @@ research = head('Research | cli0ck',
   <section class="bg-secondary lg:px-10 lg:py-20 px-3 py-16">
     <div class="max-w-screen-xl mx-auto text-center">
       <h2 class="font-semibold lg:text-5xl mb-4 text-3xl text-white">Let&rsquo;s talk</h2>
-      <p class="font-light lg:mb-12 lg:text-2xl mb-8 text-lg text-white/80">Tell us what you&rsquo;re building, and what keeps you up at night.</p>
+      <p class="font-light lg:mb-10 lg:text-2xl mb-8 text-lg text-white/80">Tell us what you&rsquo;re building, and what keeps you up at night.</p>
       {cta('Put us on your target', 'mailto:' + EMAIL)}
     </div>
   </section>
@@ -684,7 +684,7 @@ for i, w in enumerate(WRITEUPS):
   <section class="bg-secondary lg:px-10 lg:py-20 px-3 py-16">
     <div class="max-w-screen-xl mx-auto text-center">
       <h2 class="font-semibold lg:text-5xl mb-4 text-3xl text-white">Let&rsquo;s talk</h2>
-      <p class="font-light lg:mb-12 lg:text-2xl mb-8 text-lg text-white/80">Tell us what you&rsquo;re building, and what keeps you up at night.</p>
+      <p class="font-light lg:mb-10 lg:text-2xl mb-8 text-lg text-white/80">Tell us what you&rsquo;re building, and what keeps you up at night.</p>
       {cta('Put us on your target', 'mailto:' + EMAIL)}
     </div>
   </section>
@@ -760,7 +760,7 @@ ctf_index = head('CTF write-ups | cli0ck',
   <section class="bg-secondary lg:px-10 lg:py-20 px-3 py-16">
     <div class="max-w-screen-xl mx-auto text-center">
       <h2 class="font-semibold lg:text-5xl mb-4 text-3xl text-white">Let&rsquo;s talk</h2>
-      <p class="font-light lg:mb-12 lg:text-2xl mb-8 text-lg text-white/80">Tell us what you&rsquo;re building, and what keeps you up at night.</p>
+      <p class="font-light lg:mb-10 lg:text-2xl mb-8 text-lg text-white/80">Tell us what you&rsquo;re building, and what keeps you up at night.</p>
       {cta('Put us on your target', 'mailto:' + EMAIL)}
     </div>
   </section>
@@ -818,7 +818,7 @@ for ev in EVENTS:
   <section class="bg-secondary lg:px-10 lg:py-20 px-3 py-16">
     <div class="max-w-screen-xl mx-auto text-center">
       <h2 class="font-semibold lg:text-5xl mb-4 text-3xl text-white">Let&rsquo;s talk</h2>
-      <p class="font-light lg:mb-12 lg:text-2xl mb-8 text-lg text-white/80">Tell us what you&rsquo;re building, and what keeps you up at night.</p>
+      <p class="font-light lg:mb-10 lg:text-2xl mb-8 text-lg text-white/80">Tell us what you&rsquo;re building, and what keeps you up at night.</p>
       {cta('Put us on your target', 'mailto:' + EMAIL)}
     </div>
   </section>
