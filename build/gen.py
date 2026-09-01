@@ -837,7 +837,7 @@ for ev in EVENTS:
 # their address as Reply-To. The access key is public by design — it only
 # ever delivers to the address it was issued for, so it is useless to anyone
 # else. Requested for info@cli0ck.com; paste it below.
-W3F_KEY = 'PASTE_ACCESS_KEY_HERE'
+W3F_KEY = '39f7cd36-0cf6-4bbd-b49a-8eab19f0a5aa'
 
 TOPICS = ['About our research', 'Report something to us', 'Talk or workshop',
           'Work on something together', 'Something else']
