@@ -365,7 +365,7 @@ SERVICES = [
  ]),
  ('Offensive operations', [
   ('Red teaming',
-   'Full-chain adversary simulation: initial access, Windows internals and process-level tradecraft, lateral movement, objective. Run by an operator who does this for a living at HABOOB, against the organisation rather than a single application.'),
+   'Full-chain adversary simulation: initial access, Windows internals and process-level tradecraft, lateral movement, objective. Run by an operator who does this work full-time in the field, against the organisation rather than a single application.'),
   ('Penetration testing',
    'Web, mobile, and infrastructure assessments that are original research rather than a checklist run. You get the attack path, the proof it works, and what to change &mdash; not a scanner export with the logo swapped.'),
   ('After the report',
@@ -409,8 +409,6 @@ PROOF = [
   'Second place for an AI-guided counter-UAS laser defence system &mdash; detection, tracking and low-cost interception.'),
  ('CometChat &middot; messaging platform', '',
   'Stored XSS in group messages, reported privately and fixed by the vendor before anything was published here. <span class="c-fact">CVE-2026-39154</span>'),
- ('HABOOB &middot; Red Team Specialist', '',
-  'Ahmed runs full-scope red team engagements at one of the Kingdom&rsquo;s leading offensive security firms.'),
  ('Certifications &middot; both operators', '',
   'CRTO &middot; OSCP+ &middot; OSCP &middot; eCDFP &middot; CCNA &middot; eCPPTv3 &middot; eJPTv2. Earned, not collected.'),
 ]
@@ -420,7 +418,7 @@ CREW = [
  ('AA','Abdulaziz Alasaiqah','Vulnerability research &middot; web &amp; browser security',
   'Five published CVEs across Mozilla Firefox and CometChat &mdash; a content-process use-after-free in ImageLib, an uninitialised heap leak through a crafted web font, a WebRender Fission bypass, test-only autofill handlers shipped to production, and a stored XSS in group messaging. eCPPTv3, eJPTv2. 1,060+ points on BugBounty.sa.', LI_AZ),
  ('AB','Ahmed Albalawi','Red team &middot; adversary simulation',
-  'Red Team Specialist at HABOOB. Focused on offensive security and adversary simulation &mdash; not just finding vulnerabilities, but understanding why they exist and how an attacker actually reaches them. Windows internals, malware tradecraft, and full-chain operations. CRTO, OSCP+, OSCP, eCDFP, CCNA.', LI_AH),
+  'Red team operator. Focused on offensive security and adversary simulation &mdash; not just finding vulnerabilities, but understanding why they exist and how an attacker actually reaches them. Windows internals, malware tradecraft, and full-chain operations. CRTO, OSCP+, OSCP, eCDFP, CCNA.', LI_AH),
 ]
 crew = '\n'.join(f'''          <div>
             <div class="flex items-center mb-4 space-x-3">
