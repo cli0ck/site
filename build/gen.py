@@ -262,7 +262,7 @@ def hdr(p):
 {li(p+'ctf.html','CTF')}
 {li(p+'index.html#crew','The Crew')}
 {li(p+'index.html#record','Record')}
-{li('mailto:'+EMAIL,'Contact')}
+{li(p+'contact.html','Contact')}
         </ul>
       </div>
     </div>
@@ -296,7 +296,7 @@ def foot(p):
           <li><a href="{p}ctf.html" class="text-white">CTF</a></li>
           <li><a href="{p}index.html#crew" class="text-white">The Crew</a></li>
           <li><a href="{p}index.html#record" class="text-white">Record</a></li>
-          <li><a href="mailto:{EMAIL}" class="text-white">Contact</a></li>
+          <li><a href="{p}contact.html" class="text-white">Contact</a></li>
         </ul>
       </div>
     </div>
@@ -451,7 +451,7 @@ home = head('cli0ck | Vulnerability research',
         <p class="c-eyebrow mb-5">Vulnerability research &middot; Riyadh</p>
         <h1 class="font-semibold lg:text-6xl mb-5 text-3xl text-white">Five CVEs. Every one fixed before you read this.</h1>
         <p class="font-light lg:mb-10 lg:text-2xl mb-8 text-lg text-white/80">Two researchers out of Riyadh. We break browsers and the software around them, then hand the vendor the root cause and the patch.</p>
-        {cta('Put us on your target', 'mailto:' + EMAIL)}
+        {cta('Put us on your target', 'contact.html')}
       </div>
     </div>
   </section>
@@ -573,7 +573,7 @@ home = head('cli0ck | Vulnerability research',
     <div class="max-w-screen-xl mx-auto text-center">
       <h2 class="font-semibold lg:text-5xl mb-4 text-3xl text-white">Let&rsquo;s talk</h2>
       <p class="font-light lg:mb-10 lg:text-2xl mb-8 text-lg text-white/80">Tell us what you&rsquo;re building, and what keeps you up at night.</p>
-      {cta('Put us on your target', 'mailto:' + EMAIL)}
+      {cta('Put us on your target', 'contact.html')}
     </div>
   </section>
 </main>
@@ -627,7 +627,7 @@ research = head('Research | cli0ck',
     <div class="max-w-screen-xl mx-auto text-center">
       <h2 class="font-semibold lg:text-5xl mb-4 text-3xl text-white">Let&rsquo;s talk</h2>
       <p class="font-light lg:mb-10 lg:text-2xl mb-8 text-lg text-white/80">Tell us what you&rsquo;re building, and what keeps you up at night.</p>
-      {cta('Put us on your target', 'mailto:' + EMAIL)}
+      {cta('Put us on your target', 'contact.html')}
     </div>
   </section>
 </main>
@@ -685,7 +685,7 @@ for i, w in enumerate(WRITEUPS):
     <div class="max-w-screen-xl mx-auto text-center">
       <h2 class="font-semibold lg:text-5xl mb-4 text-3xl text-white">Let&rsquo;s talk</h2>
       <p class="font-light lg:mb-10 lg:text-2xl mb-8 text-lg text-white/80">Tell us what you&rsquo;re building, and what keeps you up at night.</p>
-      {cta('Put us on your target', 'mailto:' + EMAIL)}
+      {cta('Put us on your target', '../contact.html')}
     </div>
   </section>
 </main>
@@ -761,7 +761,7 @@ ctf_index = head('CTF write-ups | cli0ck',
     <div class="max-w-screen-xl mx-auto text-center">
       <h2 class="font-semibold lg:text-5xl mb-4 text-3xl text-white">Let&rsquo;s talk</h2>
       <p class="font-light lg:mb-10 lg:text-2xl mb-8 text-lg text-white/80">Tell us what you&rsquo;re building, and what keeps you up at night.</p>
-      {cta('Put us on your target', 'mailto:' + EMAIL)}
+      {cta('Put us on your target', 'contact.html')}
     </div>
   </section>
 </main>
@@ -819,7 +819,7 @@ for ev in EVENTS:
     <div class="max-w-screen-xl mx-auto text-center">
       <h2 class="font-semibold lg:text-5xl mb-4 text-3xl text-white">Let&rsquo;s talk</h2>
       <p class="font-light lg:mb-10 lg:text-2xl mb-8 text-lg text-white/80">Tell us what you&rsquo;re building, and what keeps you up at night.</p>
-      {cta('Put us on your target', 'mailto:' + EMAIL)}
+      {cta('Put us on your target', '../contact.html')}
     </div>
   </section>
 </main>
@@ -830,3 +830,144 @@ for ev in EVENTS:
 '''
     open(f"{OUT}/ctf/{ev['slug']}.html",'w',encoding='utf-8').write(page)
     print(f"  ctf/{ev['slug']}.html  {len(page)}")
+
+# ============================================================ CONTACT
+ENDPOINT = 'https://form.cli0ck.com'
+
+SERVICES_FULL = [
+ ('pentest', 'Penetration testing',
+  'Web, mobile and infrastructure assessments that are original research rather than a checklist run. You get the attack path, the proof it works, and what to change.',
+  ['Web applications','Mobile apps','APIs &amp; SDKs','Infrastructure','Source-assisted review']),
+ ('redteam', 'Red team engagement',
+  'Full-chain adversary simulation against the organisation rather than a single application: initial access, Windows internals and process-level tradecraft, lateral movement, objective.',
+  ['Initial access','Windows internals','Lateral movement','Detection testing','Purple team']),
+ ('vulnresearch', 'Vulnerability research',
+  'We read the code paths everyone else skips. Memory safety, process isolation, and logic flaws in software you ship or depend on &mdash; the class of bug that survives a code review.',
+  ['Browser internals','Memory safety','Binary analysis','Protocol review','0-day research']),
+ ('mobile', 'Mobile application security',
+  'iOS and Android assessments: local storage, transport, obfuscation, and the backend the app actually talks to. Reverse engineering included, not extra.',
+  ['iOS','Android','Reverse engineering','Runtime analysis','Backend review']),
+ ('advisory', 'Advisory &amp; training',
+  'Threat modelling before you build, secure design review while you build, and technical sessions for your engineers. Also conference talks and workshops.',
+  ['Threat modelling','Design review','Engineer training','Conference talks']),
+]
+
+svc_cards = '\n'.join(f'''        <div class="c-svc">
+          <h3>{t}</h3>
+          <p>{d}</p>
+          <ul>{''.join(f'<li>{x}</li>' for x in tags)}</ul>
+        </div>''' for _, t, d, tags in SERVICES_FULL)
+
+picks = '\n'.join(f'''            <label class="c-pick">
+              <input type="checkbox" name="services" value="{k}">
+              <span><b>{t}</b><i>{tags[0]} &middot; {tags[1]}</i></span>
+            </label>''' for k, t, _, tags in SERVICES_FULL) + '''
+            <label class="c-pick">
+              <input type="checkbox" name="services" value="other">
+              <span><b>Something else</b><i>Tell us below</i></span>
+            </label>'''
+
+contact = head('Contact | cli0ck',
+  'Tell cli0ck what you are building and what keeps you up at night. Penetration testing, red team engagements, and vulnerability research.', '',
+  '\n<link href="assets/writeup.css" rel="stylesheet">') + f'''
+
+{hdr('')}
+<main>
+  <section class="lg:pb-24 lg:pt-40 lg:px-6 pb-16 pt-32 px-3">
+    <div class="max-w-screen-xl mx-auto">
+      <p class="font-mono mb-4 text-accent text-sm">$ contact --team cli0ck</p>
+      <h1 class="font-semibold leading-tight lg:text-6xl max-w-4xl mb-6 text-4xl text-white">Tell us what keeps you up at night.</h1>
+      <p class="leading-relaxed lg:text-xl max-w-2xl mb-12 text-lg text-white/60">Two researchers, in Riyadh. We read every enquiry ourselves and answer within two working days &mdash; including the ones we turn down, and why.</p>
+    </div>
+  </section>
+
+  <section class="lg:px-6 lg:pb-24 pb-16 px-3">
+    <div class="gap-12 grid grid-cols-1 lg:gap-20 lg:grid-cols-2 max-w-screen-xl mx-auto">
+
+      <div>
+        <p class="c-eyebrow mb-6">What we do</p>
+{svc_cards}
+        <p class="leading-relaxed mt-8 text-base text-white/40">Not sure which one you need? Describe the problem and we will tell you &mdash; or tell you it is not us. <a href="research.html" class="hover:underline text-accent">Read the research first</a> if you want to judge the work before you write.</p>
+      </div>
+
+      <div>
+        <p class="c-eyebrow mb-6">Start here</p>
+        <form id="contactform" data-endpoint="{ENDPOINT}" novalidate>
+
+          <div class="c-hp" aria-hidden="true">
+            <label>Leave this empty<input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+          </div>
+
+          <div class="c-row">
+            <label class="c-field">
+              <span class="c-label">Your name <span class="req">*</span></span>
+              <input class="c-input" type="text" name="name" required autocomplete="name" placeholder="Full name">
+            </label>
+            <label class="c-field">
+              <span class="c-label">Work email <span class="req">*</span></span>
+              <input class="c-input" type="email" name="email" required autocomplete="email" placeholder="you@company.com">
+            </label>
+          </div>
+
+          <div class="c-row">
+            <label class="c-field">
+              <span class="c-label">Company</span>
+              <input class="c-input" type="text" name="company" autocomplete="organization" placeholder="Optional">
+            </label>
+            <label class="c-field">
+              <span class="c-label">Indicative budget</span>
+              <select class="c-select" name="budget">
+                <option value="">Prefer not to say</option>
+                <option>Under 25,000 SAR</option>
+                <option>25,000 – 75,000 SAR</option>
+                <option>75,000 – 200,000 SAR</option>
+                <option>Over 200,000 SAR</option>
+                <option>Not commercial &mdash; research or CFP</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="c-field">
+            <span class="c-label">What do you need</span>
+            <div class="c-picks">
+{picks}
+            </div>
+          </div>
+
+          <label class="c-field">
+            <span class="c-label">The problem <span class="req">*</span></span>
+            <textarea class="c-textarea" name="message" required placeholder="What are you building, what worries you about it, and is there a deadline? The more concrete you are, the more useful our first reply will be."></textarea>
+            <span class="c-help">Do not send credentials, live exploit code, or client data in this form. If you are reporting a vulnerability <em>in our own site</em>, use <a href="mailto:security@cli0ck.com" class="hover:underline text-accent">security@cli0ck.com</a>.</span>
+          </label>
+
+          <button type="submit" class="c-submit">
+            <span class="txt">Send enquiry</span>
+            <span class="chip" aria-hidden="true">&rarr;</span>
+          </button>
+
+          <div id="formstatus" class="c-status" role="status" aria-live="polite"></div>
+        </form>
+
+        <div class="border-t border-white/15 mt-12 pt-8">
+          <p class="c-eyebrow mb-5">Or reach us directly</p>
+          <div class="flex flex-col gap-3">
+            <a href="mailto:{EMAIL}" class="hover:underline text-accent">{EMAIL}</a>
+            <a href="mailto:security@cli0ck.com" class="hover:underline text-accent">security@cli0ck.com <span class="text-white/40">&mdash; vulnerabilities in our own site</span></a>
+            <a href="{LI_AZ}" class="hover:underline text-accent" target="_blank" rel="noopener">Abdulaziz on LinkedIn</a>
+            <a href="{LI_AH}" class="hover:underline text-accent" target="_blank" rel="noopener">Ahmed on LinkedIn</a>
+          </div>
+          <p class="leading-relaxed mt-6 text-sm text-white/40">Everything you send stays between the two of us. We sign NDAs before scoping, and nothing about a client appears in the archive without written permission.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</main>
+{foot('')}
+{MENU_JS}
+<script src="assets/contact.js" defer></script>
+</body>
+</html>
+'''
+open(f'{OUT}/contact.html','w',encoding='utf-8').write(contact)
+print(f'  contact.html  {len(contact)}')

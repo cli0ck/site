@@ -325,3 +325,95 @@ a[class*="rounded-full"][target="_blank"] > span{white-space:nowrap}
   }
   a[class*="rounded-full"][target="_blank"] > span{white-space:normal}
 }
+
+/* ============================================================
+   Contact form + service picker
+   ============================================================ */
+.c-field{display:block;margin-bottom:20px}
+.c-label{
+  display:block;font-family:var(--c-mono);font-size:.6875rem;font-weight:600;
+  letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:9px;
+}
+.c-label .req{color:#f59e0b}
+.c-input,.c-textarea,.c-select{
+  width:100%;background:#1c1917;color:#fff;
+  border:1px solid rgba(255,255,255,.15);border-radius:.5rem;
+  padding:14px 16px;font-family:inherit;font-size:1rem;line-height:1.5;
+  transition:border-color .25s ease,background .25s ease;
+  -webkit-appearance:none;appearance:none;
+}
+.c-textarea{min-height:170px;resize:vertical}
+.c-select{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23a8a29e' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 14px center;background-size:18px;padding-right:44px;
+}
+.c-input:hover,.c-textarea:hover,.c-select:hover{border-color:rgba(255,255,255,.28)}
+.c-input:focus,.c-textarea:focus,.c-select:focus{
+  outline:none;border-color:#d97706;background:#211d1b;
+  box-shadow:0 0 0 3px rgba(217,119,6,.16);
+}
+.c-input::placeholder,.c-textarea::placeholder{color:rgba(255,255,255,.3)}
+.c-help{margin-top:8px;font-size:.8125rem;color:rgba(255,255,255,.42);line-height:1.5}
+.c-row{display:grid;grid-template-columns:1fr;gap:0}
+@media (min-width:768px){ .c-row{grid-template-columns:1fr 1fr;gap:0 20px} }
+
+/* service picker — checkbox cards */
+.c-picks{display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:8px}
+@media (min-width:640px){ .c-picks{grid-template-columns:1fr 1fr} }
+.c-pick{position:relative;display:block;cursor:pointer}
+.c-pick input{position:absolute;opacity:0;width:0;height:0}
+.c-pick span{
+  display:block;padding:14px 16px 14px 46px;border-radius:.5rem;
+  border:1px solid rgba(255,255,255,.15);background:#1c1917;
+  font-size:.9375rem;color:rgba(255,255,255,.78);transition:all .25s ease;min-height:52px;
+}
+.c-pick span::before{
+  content:"";position:absolute;left:15px;top:50%;translate:0 -50%;
+  width:18px;height:18px;border-radius:4px;border:1px solid rgba(255,255,255,.28);
+  transition:all .25s ease;
+}
+.c-pick span::after{
+  content:"";position:absolute;left:21px;top:50%;translate:0 -60%;
+  width:5px;height:10px;border:solid #1c1917;border-width:0 2px 2px 0;
+  rotate:45deg;opacity:0;transition:opacity .2s ease;
+}
+.c-pick:hover span{border-color:rgba(255,255,255,.3)}
+.c-pick input:checked + span{border-color:#d97706;background:rgba(217,119,6,.09);color:#fff}
+.c-pick input:checked + span::before{background:#d97706;border-color:#d97706}
+.c-pick input:checked + span::after{opacity:1}
+.c-pick input:focus-visible + span{box-shadow:0 0 0 3px rgba(217,119,6,.3)}
+.c-pick b{display:block;font-weight:600;color:#fff;margin-bottom:2px}
+.c-pick i{display:block;font-style:normal;font-size:.8125rem;color:rgba(255,255,255,.5);line-height:1.45}
+
+/* submit + status */
+.c-submit{
+  display:inline-flex;align-items:center;gap:14px;border:1px solid #d97706;
+  background:linear-gradient(to right,#d97706,#b45309);border-radius:9999px;
+  padding:6px 6px 6px 26px;color:#fff;font-weight:500;font-size:1.0625rem;
+  cursor:pointer;transition:all .3s ease;font-family:inherit;
+}
+.c-submit:hover:not(:disabled){filter:brightness(1.12);transform:translateY(-2px)}
+.c-submit:disabled{opacity:.55;cursor:not-allowed;transform:none}
+.c-submit .chip{
+  display:flex;align-items:center;justify-content:center;height:44px;width:44px;
+  border-radius:9999px;background:rgba(255,255,255,.2);flex:none;font-size:1.25rem;
+}
+.c-status{margin-top:20px;padding:16px 18px;border-radius:.5rem;font-size:.9375rem;line-height:1.6;display:none}
+.c-status.show{display:block}
+.c-status.ok{background:rgba(37,195,138,.1);border:1px solid rgba(37,195,138,.35);color:#7ee2b8}
+.c-status.err{background:rgba(220,38,38,.1);border:1px solid rgba(220,38,38,.35);color:#f0836a}
+.c-status b{display:block;color:#fff;margin-bottom:4px;font-weight:600}
+.c-hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+
+/* service cards on the contact page */
+.c-svc{border-top:1px solid rgba(255,255,255,.13);padding:28px 0}
+.c-svc:last-child{border-bottom:1px solid rgba(255,255,255,.13)}
+.c-svc h3{font-size:1.25rem;font-weight:600;color:#fff;margin-bottom:10px}
+@media (min-width:1024px){ .c-svc h3{font-size:1.5rem} }
+.c-svc p{color:rgba(255,255,255,.6);line-height:1.7;margin-bottom:14px}
+.c-svc ul{display:flex;flex-wrap:wrap;gap:8px;padding:0;margin:0;list-style:none}
+.c-svc li{
+  font-family:var(--c-mono);font-size:.6875rem;letter-spacing:.08em;
+  border:1px solid rgba(255,255,255,.15);border-radius:9999px;
+  padding:5px 12px;color:rgba(255,255,255,.55);
+}

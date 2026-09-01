@@ -1,0 +1,17 @@
+name = "cli0ck-contact"
+main = "worker.js"
+compatibility_date = "2026-01-01"
+
+[vars]
+TO_EMAIL       = "info@cli0ck.com"
+FROM_EMAIL     = "info@cli0ck.com"
+ALLOWED_ORIGIN = "https://cli0ck.com"
+
+# rate limiting store — create with:  wrangler kv namespace create RL
+# [[kv_namespaces]]
+# binding = "RL"
+# id = "PASTE_THE_ID_HERE"
+
+[[routes]]
+pattern = "form.cli0ck.com/*"
+zone_name = "cli0ck.com"
