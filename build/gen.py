@@ -359,21 +359,21 @@ def research_card(w, p='', href=None, assets=None):
 
 # ============================================================ HOME
 SERVICES = [
- ('Vulnerability research', [
-  ('Browser and memory safety',
-   'We read the code paths everyone else skips: use-after-free, uninitialised heap disclosure, and process-isolation bypasses. Four CVEs in Mozilla Firefox, including a content-process use-after-free rated CVSS 9.8 and reachable from an ordinary web page.'),
-  ('Application security',
-   'Stored XSS, broken access control, and authentication flaws across web platforms and SDKs. We test the product you actually shipped, in the environment it actually runs in, and write the report so triage takes an afternoon rather than a fortnight.'),
-  ('Responsible disclosure',
-   'Private report first, always. A minimised reproducer, a root cause written for the engineer who has to land the patch, and no publication until the fix has reached users. Five disclosures, five vendor fixes, zero leaks.'),
+ ('How we work', [
+  ('We pick the target',
+   'Software the world actually runs &mdash; browsers, messaging platforms, the libraries underneath them. We write down why a target is worth the time before we touch it, and we drop it when the thesis stops holding.'),
+  ('We find the root cause',
+   'Not &ldquo;it crashes&rdquo; &mdash; why it crashes. Use-after-free, uninitialised heap disclosure, process-isolation bypasses, stored XSS. The class of bug that survives a code review because it only shows up at runtime.'),
+  ('We disclose it properly',
+   'Private report first, always. A minimised reproducer and an analysis written for the engineer who has to land the patch. Nothing gets published until the fix has shipped and users have had time to take it.'),
  ]),
- ('Offensive operations', [
-  ('Red teaming',
-   'Full-chain adversary simulation: initial access, Windows internals and process-level tradecraft, lateral movement, objective. Run by an operator who does this work full-time in the field, against the organisation rather than a single application.'),
-  ('Penetration testing',
-   'Web, mobile, and infrastructure assessments that are original research rather than a checklist run. You get the attack path, the proof it works, and what to change &mdash; not a scanner export with the logo swapped.'),
-  ('After the report',
-   'A finding is not a fix. We stay available while your team lands the patch, re-test what we broke, and tell you plainly when a control still does not hold.'),
+ ('Where the bugs came from', [
+  ('Browser internals',
+   'Four CVEs in Mozilla Firefox across ImageLib, Text, WebRender and Form Autofill &mdash; including a content-process use-after-free rated CVSS 9.8 and reachable from an ordinary web page.'),
+  ('Application security',
+   'Stored XSS in CometChat group messages: a payload that persists server-side and executes for every member who opens the conversation. Reported privately, fixed by the vendor.'),
+  ('Competition',
+   'First blood on the reverse engineering track at the Tuwaiq Cyber Challenge, third at Black Hat MEA 2025, first at Tuwaiq Mobile CTF. Live competition is the closest thing to a real clock.'),
  ]),
 ]
 services = ''
@@ -422,7 +422,7 @@ CREW = [
  ('AA','Abdulaziz Alasaiqah','Vulnerability research &middot; web &amp; browser security',
   'Five published CVEs across Mozilla Firefox and CometChat &mdash; a content-process use-after-free in ImageLib, an uninitialised heap leak through a crafted web font, a WebRender Fission bypass, test-only autofill handlers shipped to production, and a stored XSS in group messaging. eCPPTv3, eJPTv2. 1,060+ points on BugBounty.sa.', LI_AZ),
  ('AB','Ahmed Albalawi','Red team &middot; adversary simulation',
-  'Red team operator. Focused on offensive security and adversary simulation &mdash; not just finding vulnerabilities, but understanding why they exist and how an attacker actually reaches them. Windows internals, malware tradecraft, and full-chain operations. CRTO, OSCP+, OSCP, eCDFP, CCNA.', LI_AH),
+  'Red team operator and CTF player. Focused on offensive security and adversary simulation &mdash; not just finding vulnerabilities, but understanding why they exist and how an attacker actually reaches them. Windows internals, malware tradecraft, and full-chain operations. CRTO, OSCP+, OSCP, eCDFP, CCNA.', LI_AH),
 ]
 crew = '\n'.join(f'''          <div>
             <div class="flex items-center mb-4 space-x-3">
@@ -450,15 +450,15 @@ home = head('cli0ck | Vulnerability research',
       <div class="max-w-screen-xl mb-20 mx-auto">
         <p class="c-eyebrow mb-5">Vulnerability research &middot; Riyadh</p>
         <h1 class="font-semibold lg:text-6xl mb-5 text-3xl text-white">Five CVEs. Every one fixed before you read this.</h1>
-        <p class="font-light lg:mb-10 lg:text-2xl mb-8 text-lg text-white/80">Two researchers out of Riyadh. We break browsers and the software around them, then hand the vendor the root cause and the patch.</p>
-        {cta('Put us on your target', 'contact.html')}
+        <p class="font-light lg:mb-10 lg:text-2xl mb-8 text-lg text-white/80">Two independent researchers in Riyadh. We break browsers and the software the world runs on, then hand the vendor the root cause and the patch.</p>
+        {cta('Get in touch', 'contact.html')}
       </div>
     </div>
   </section>
 
   <section id="customers" class="lg:pb-16 lg:pt-14 lg:px-6 pb-12 pt-8 px-3">
     <div class="lg:pb-14 pb-10 px-3 text-center">
-      <p class="text-white/40 text-xs tracking-[0.2em] uppercase">Reported to &middot; competed in &middot; certified by</p>
+      <p class="text-white/40 text-xs tracking-[0.2em] uppercase">Vendors who shipped our fixes &middot; where we compete</p>
     </div>
     <div class="logo-container" style="--num-logos:12">
       <div class="logo-slide">
@@ -495,8 +495,8 @@ home = head('cli0ck | Vulnerability research',
   <section id="services" class="bg-secondary lg:px-6 lg:py-20 px-3 py-12">
     <div class="max-w-screen-xl mx-auto">
       <div class="lg:mb-16 max-w-3xl mb-12">
-        <h2 class="font-semibold leading-tight lg:text-5xl mb-6 text-3xl text-white">What we offer</h2>
-        <p class="leading-relaxed lg:text-xl text-lg text-white/60">A two-person team that publishes what it finds. Half the work is original vulnerability research on software everyone runs. The other half is the offensive engineering our clients need, done by people whose findings you can go and read.</p>
+        <h2 class="font-semibold leading-tight lg:text-5xl mb-6 text-3xl text-white">How we work</h2>
+        <p class="leading-relaxed lg:text-xl text-lg text-white/60">Two independent researchers. We are not a consultancy and we do not take engagements &mdash; we pick our own targets, work them until they break, and publish everything once the vendor has shipped a fix.</p>
       </div>
 {services}      <p class="lg:mt-16 lg:text-lg mt-12 text-base text-white/40">None of this is a claim you have to take on trust. <a href="research.html" class="hover:underline text-accent">Read the research &rarr;</a></p>
     </div>
@@ -571,9 +571,9 @@ home = head('cli0ck | Vulnerability research',
 
   <section class="bg-primary lg:px-10 lg:py-20 px-3 py-16">
     <div class="max-w-screen-xl mx-auto text-center">
-      <h2 class="font-semibold lg:text-5xl mb-4 text-3xl text-white">Let&rsquo;s talk</h2>
-      <p class="font-light lg:mb-10 lg:text-2xl mb-8 text-lg text-white/80">Tell us what you&rsquo;re building, and what keeps you up at night.</p>
-      {cta('Put us on your target', 'contact.html')}
+      <h2 class="font-semibold lg:text-5xl mb-4 text-3xl text-white">Get in touch</h2>
+      <p class="font-light lg:mb-10 lg:text-2xl mb-8 text-lg text-white/80">Questions about the research, something to report, or an invitation to speak.</p>
+      {cta('Get in touch', 'contact.html')}
     </div>
   </section>
 </main>
@@ -625,9 +625,9 @@ research = head('Research | cli0ck',
 
   <section class="bg-secondary lg:px-10 lg:py-20 px-3 py-16">
     <div class="max-w-screen-xl mx-auto text-center">
-      <h2 class="font-semibold lg:text-5xl mb-4 text-3xl text-white">Let&rsquo;s talk</h2>
-      <p class="font-light lg:mb-10 lg:text-2xl mb-8 text-lg text-white/80">Tell us what you&rsquo;re building, and what keeps you up at night.</p>
-      {cta('Put us on your target', 'contact.html')}
+      <h2 class="font-semibold lg:text-5xl mb-4 text-3xl text-white">Get in touch</h2>
+      <p class="font-light lg:mb-10 lg:text-2xl mb-8 text-lg text-white/80">Questions about the research, something to report, or an invitation to speak.</p>
+      {cta('Get in touch', 'contact.html')}
     </div>
   </section>
 </main>
@@ -683,9 +683,9 @@ for i, w in enumerate(WRITEUPS):
 
   <section class="bg-secondary lg:px-10 lg:py-20 px-3 py-16">
     <div class="max-w-screen-xl mx-auto text-center">
-      <h2 class="font-semibold lg:text-5xl mb-4 text-3xl text-white">Let&rsquo;s talk</h2>
-      <p class="font-light lg:mb-10 lg:text-2xl mb-8 text-lg text-white/80">Tell us what you&rsquo;re building, and what keeps you up at night.</p>
-      {cta('Put us on your target', '../contact.html')}
+      <h2 class="font-semibold lg:text-5xl mb-4 text-3xl text-white">Get in touch</h2>
+      <p class="font-light lg:mb-10 lg:text-2xl mb-8 text-lg text-white/80">Questions about the research, something to report, or an invitation to speak.</p>
+      {cta('Get in touch', '../contact.html')}
     </div>
   </section>
 </main>
@@ -742,7 +742,7 @@ ctf_index = head('CTF write-ups | cli0ck',
     <div class="max-w-screen-xl mx-auto">
       <p class="font-mono mb-4 text-accent text-sm">$ cat solves.txt</p>
       <h1 class="font-semibold leading-tight lg:text-6xl max-w-4xl mb-6 text-4xl text-white">The same method, on a clock.</h1>
-      <p class="leading-relaxed lg:mb-16 lg:text-xl max-w-2xl mb-12 text-lg text-white/60">Competition is the closest thing to an engagement deadline. These are our solves &mdash; recon, the actual bug, the exploit as we ran it, and what we would look for next time.</p>
+      <p class="leading-relaxed lg:mb-16 lg:text-xl max-w-2xl mb-12 text-lg text-white/60">Competition is the closest thing to a real clock. These are our solves &mdash; recon, the actual bug, the exploit as we ran it, and what we would look for next time.</p>
 
       <div class="border-b border-t border-white/15 divide-white/15 divide-y max-w-4xl">
 {chr(10).join(_event_block(e) for e in EVENTS) if EVENTS else '        <p class="lg:py-10 py-8 text-white/40">No write-ups published yet.</p>'}
@@ -759,9 +759,9 @@ ctf_index = head('CTF write-ups | cli0ck',
 
   <section class="bg-secondary lg:px-10 lg:py-20 px-3 py-16">
     <div class="max-w-screen-xl mx-auto text-center">
-      <h2 class="font-semibold lg:text-5xl mb-4 text-3xl text-white">Let&rsquo;s talk</h2>
-      <p class="font-light lg:mb-10 lg:text-2xl mb-8 text-lg text-white/80">Tell us what you&rsquo;re building, and what keeps you up at night.</p>
-      {cta('Put us on your target', 'contact.html')}
+      <h2 class="font-semibold lg:text-5xl mb-4 text-3xl text-white">Get in touch</h2>
+      <p class="font-light lg:mb-10 lg:text-2xl mb-8 text-lg text-white/80">Questions about the research, something to report, or an invitation to speak.</p>
+      {cta('Get in touch', 'contact.html')}
     </div>
   </section>
 </main>
@@ -817,9 +817,9 @@ for ev in EVENTS:
 
   <section class="bg-secondary lg:px-10 lg:py-20 px-3 py-16">
     <div class="max-w-screen-xl mx-auto text-center">
-      <h2 class="font-semibold lg:text-5xl mb-4 text-3xl text-white">Let&rsquo;s talk</h2>
-      <p class="font-light lg:mb-10 lg:text-2xl mb-8 text-lg text-white/80">Tell us what you&rsquo;re building, and what keeps you up at night.</p>
-      {cta('Put us on your target', '../contact.html')}
+      <h2 class="font-semibold lg:text-5xl mb-4 text-3xl text-white">Get in touch</h2>
+      <p class="font-light lg:mb-10 lg:text-2xl mb-8 text-lg text-white/80">Questions about the research, something to report, or an invitation to speak.</p>
+      {cta('Get in touch', '../contact.html')}
     </div>
   </section>
 </main>
@@ -834,132 +834,78 @@ for ev in EVENTS:
 # ============================================================ CONTACT
 ENDPOINT = 'https://form.cli0ck.com'
 
-SERVICES_FULL = [
- ('pentest', 'Penetration testing',
-  'Web, mobile and infrastructure assessments that are original research rather than a checklist run. You get the attack path, the proof it works, and what to change.',
-  ['Web applications','Mobile apps','APIs &amp; SDKs','Infrastructure','Source-assisted review']),
- ('redteam', 'Red team engagement',
-  'Full-chain adversary simulation against the organisation rather than a single application: initial access, Windows internals and process-level tradecraft, lateral movement, objective.',
-  ['Initial access','Windows internals','Lateral movement','Detection testing','Purple team']),
- ('vulnresearch', 'Vulnerability research',
-  'We read the code paths everyone else skips. Memory safety, process isolation, and logic flaws in software you ship or depend on &mdash; the class of bug that survives a code review.',
-  ['Browser internals','Memory safety','Binary analysis','Protocol review','0-day research']),
- ('mobile', 'Mobile application security',
-  'iOS and Android assessments: local storage, transport, obfuscation, and the backend the app actually talks to. Reverse engineering included, not extra.',
-  ['iOS','Android','Reverse engineering','Runtime analysis','Backend review']),
- ('advisory', 'Advisory &amp; training',
-  'Threat modelling before you build, secure design review while you build, and technical sessions for your engineers. Also conference talks and workshops.',
-  ['Threat modelling','Design review','Engineer training','Conference talks']),
+REASONS = [
+ ('research',   'About our research',      'A question on a CVE or a write-up'),
+ ('report',     'Report something to us',  'A bug in our own site or tooling'),
+ ('speaking',   'Talk or workshop',        'A conference, meetup or CFP'),
+ ('collab',     'Work on something together', 'A target, a tool, a paper'),
+ ('other',      'Something else',          'Tell us below'),
 ]
-
-svc_cards = '\n'.join(f'''        <div class="c-svc">
-          <h3>{t}</h3>
-          <p>{d}</p>
-          <ul>{''.join(f'<li>{x}</li>' for x in tags)}</ul>
-        </div>''' for _, t, d, tags in SERVICES_FULL)
-
 picks = '\n'.join(f'''            <label class="c-pick">
               <input type="checkbox" name="services" value="{k}">
-              <span><b>{t}</b><i>{tags[0]} &middot; {tags[1]}</i></span>
-            </label>''' for k, t, _, tags in SERVICES_FULL) + '''
-            <label class="c-pick">
-              <input type="checkbox" name="services" value="other">
-              <span><b>Something else</b><i>Tell us below</i></span>
-            </label>'''
+              <span><b>{t}</b><i>{d}</i></span>
+            </label>''' for k, t, d in REASONS)
 
 contact = head('Contact | cli0ck',
-  'Tell cli0ck what you are building and what keeps you up at night. Penetration testing, red team engagements, and vulnerability research.', '',
+  'Two independent vulnerability researchers in Riyadh. Questions about the research, reports, and speaking invitations.', '',
   '\n<link href="assets/writeup.css" rel="stylesheet">') + f'''
 
 {hdr('')}
 <main>
   <section class="lg:pb-24 lg:pt-40 lg:px-6 pb-16 pt-32 px-3">
-    <div class="max-w-screen-xl mx-auto">
+    <div class="max-w-3xl mx-auto">
       <p class="font-mono mb-4 text-accent text-sm">$ contact --team cli0ck</p>
-      <h1 class="font-semibold leading-tight lg:text-6xl max-w-4xl mb-6 text-4xl text-white">Tell us what keeps you up at night.</h1>
-      <p class="leading-relaxed lg:text-xl max-w-2xl mb-12 text-lg text-white/60">Two researchers, in Riyadh. We read every enquiry ourselves and answer within two working days &mdash; including the ones we turn down, and why.</p>
-    </div>
-  </section>
+      <h1 class="font-semibold leading-tight lg:text-6xl mb-6 text-4xl text-white">Get in touch.</h1>
+      <p class="leading-relaxed lg:text-xl mb-12 text-lg text-white/60">We are two independent researchers in Riyadh who find and disclose vulnerabilities in software the world runs. If you have a question about the research, something to report, or an invitation to speak &mdash; this reaches both of us.</p>
 
-  <section class="lg:px-6 lg:pb-24 pb-16 px-3">
-    <div class="gap-8 grid grid-cols-1 lg:gap-12 md:grid-cols-2 max-w-screen-xl mx-auto">
+      <form id="contactform" data-endpoint="{ENDPOINT}" novalidate>
 
-      <div>
-        <p class="c-eyebrow mb-6">What we do</p>
-{svc_cards}
-        <p class="leading-relaxed mt-8 text-base text-white/40">Not sure which one you need? Describe the problem and we will tell you &mdash; or tell you it is not us. <a href="research.html" class="hover:underline text-accent">Read the research first</a> if you want to judge the work before you write.</p>
-      </div>
-
-      <div>
-        <p class="c-eyebrow mb-6">Start here</p>
-        <form id="contactform" data-endpoint="{ENDPOINT}" novalidate>
-
-          <div class="c-hp" aria-hidden="true">
-            <label>Leave this empty<input type="text" name="website" tabindex="-1" autocomplete="off"></label>
-          </div>
-
-          <div class="c-row">
-            <label class="c-field">
-              <span class="c-label">Your name <span class="req">*</span></span>
-              <input class="c-input" type="text" name="name" required autocomplete="name" placeholder="Full name">
-            </label>
-            <label class="c-field">
-              <span class="c-label">Work email <span class="req">*</span></span>
-              <input class="c-input" type="email" name="email" required autocomplete="email" placeholder="you@company.com">
-            </label>
-          </div>
-
-          <div class="c-row">
-            <label class="c-field">
-              <span class="c-label">Company</span>
-              <input class="c-input" type="text" name="company" autocomplete="organization" placeholder="Optional">
-            </label>
-            <label class="c-field">
-              <span class="c-label">Indicative budget</span>
-              <select class="c-select" name="budget">
-                <option value="">Prefer not to say</option>
-                <option>Under 25,000 SAR</option>
-                <option>25,000 – 75,000 SAR</option>
-                <option>75,000 – 200,000 SAR</option>
-                <option>Over 200,000 SAR</option>
-                <option>Not commercial &mdash; research or CFP</option>
-              </select>
-            </label>
-          </div>
-
-          <div class="c-field">
-            <span class="c-label">What do you need</span>
-            <div class="c-picks">
-{picks}
-            </div>
-          </div>
-
-          <label class="c-field">
-            <span class="c-label">The problem <span class="req">*</span></span>
-            <textarea class="c-textarea" name="message" required placeholder="What are you building, what worries you about it, and is there a deadline? The more concrete you are, the more useful our first reply will be."></textarea>
-            <span class="c-help">Do not send credentials, live exploit code, or client data in this form. If you are reporting a vulnerability <em>in our own site</em>, use <a href="mailto:security@cli0ck.com" class="hover:underline text-accent">security@cli0ck.com</a>.</span>
-          </label>
-
-          <button type="submit" class="c-submit">
-            <span class="txt">Send enquiry</span>
-            <span class="chip" aria-hidden="true">&rarr;</span>
-          </button>
-
-          <div id="formstatus" class="c-status" role="status" aria-live="polite"></div>
-        </form>
-
-        <div class="border-t border-white/15 mt-12 pt-8">
-          <p class="c-eyebrow mb-5">Or reach us directly</p>
-          <div class="flex flex-col gap-3">
-            <a href="mailto:{EMAIL}" class="hover:underline text-accent">{EMAIL}</a>
-            <a href="mailto:security@cli0ck.com" class="hover:underline text-accent">security@cli0ck.com <span class="text-white/40">&mdash; vulnerabilities in our own site</span></a>
-            <a href="{LI_AZ}" class="hover:underline text-accent" target="_blank" rel="noopener">Abdulaziz on LinkedIn</a>
-            <a href="{LI_AH}" class="hover:underline text-accent" target="_blank" rel="noopener">Ahmed on LinkedIn</a>
-          </div>
-          <p class="leading-relaxed mt-6 text-sm text-white/40">Everything you send stays between the two of us. We sign NDAs before scoping, and nothing about a client appears in the archive without written permission.</p>
+        <div class="c-hp" aria-hidden="true">
+          <label>Leave this empty<input type="text" name="website" tabindex="-1" autocomplete="off"></label>
         </div>
-      </div>
 
+        <div class="c-row">
+          <label class="c-field">
+            <span class="c-label">Your name <span class="req">*</span></span>
+            <input class="c-input" type="text" name="name" required autocomplete="name" placeholder="Full name">
+          </label>
+          <label class="c-field">
+            <span class="c-label">Email <span class="req">*</span></span>
+            <input class="c-input" type="email" name="email" required autocomplete="email" placeholder="you@example.com">
+          </label>
+        </div>
+
+        <div class="c-field">
+          <span class="c-label">What is this about</span>
+          <div class="c-picks">
+{picks}
+          </div>
+        </div>
+
+        <label class="c-field">
+          <span class="c-label">Your message <span class="req">*</span></span>
+          <textarea class="c-textarea" name="message" required placeholder="Be concrete &mdash; it makes our reply useful."></textarea>
+          <span class="c-help">Reporting a vulnerability in our own site or tooling? Use <a href="mailto:security@cli0ck.com" class="hover:underline text-accent">security@cli0ck.com</a> instead. Please do not send credentials or anyone else&rsquo;s data here.</span>
+        </label>
+
+        <button type="submit" class="c-submit">
+          <span class="txt">Send message</span>
+          <span class="chip" aria-hidden="true">&rarr;</span>
+        </button>
+
+        <div id="formstatus" class="c-status" role="status" aria-live="polite"></div>
+      </form>
+
+      <div class="border-t border-white/15 mt-16 pt-10">
+        <p class="c-eyebrow mb-5">Or reach us directly</p>
+        <div class="flex flex-col gap-3">
+          <a href="mailto:{EMAIL}" class="hover:underline text-accent">{EMAIL}</a>
+          <a href="mailto:security@cli0ck.com" class="hover:underline text-accent">security@cli0ck.com <span class="text-white/40">&mdash; vulnerabilities in our own site</span></a>
+          <a href="{LI_AZ}" class="hover:underline text-accent" target="_blank" rel="noopener">Abdulaziz on LinkedIn</a>
+          <a href="{LI_AH}" class="hover:underline text-accent" target="_blank" rel="noopener">Ahmed on LinkedIn</a>
+        </div>
+        <p class="leading-relaxed mt-8 text-sm text-white/40">We read everything ourselves and answer when we can. We are researchers, not a consultancy &mdash; we do not take on engagements.</p>
+      </div>
     </div>
   </section>
 </main>
