@@ -2,8 +2,11 @@
 """Build the cli0ck site: home, research index, and one page per writeup."""
 import re, os, html as H, json
 
-SRC = '/tmp/claude-1000/-mnt-f-cli0ck/ad57d32d-2572-4aae-bf28-6a152ccb9ae4/scratchpad/wu'
-OUT = '/mnt/f/cli0ck'
+# Source writeups (exported from azoz.my) and the output root.
+# Override with CLI0CK_SRC / CLI0CK_OUT if your checkout lives elsewhere.
+_HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+SRC = os.environ.get('CLI0CK_SRC', os.path.join(_HERE, 'build', 'src'))
+OUT = os.environ.get('CLI0CK_OUT', _HERE)
 
 EMAIL  = 'info@cli0ck.com'
 GITHUB = 'https://github.com/defineid'
